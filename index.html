@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tríade Gestão 360: ERP + BPO Financeiro + Contabilidade Integrados</title>
+  <meta name="description" content="Integre Vendas, Financeiro e Contabilidade em um único fluxo. Sem planilhas, sem fricção. DRE, margem e caixa prontos para decidir." />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tríade Gestão 360: ERP + BPO Financeiro + Contabilidade Integrados" />
+  <meta property="og:description" content="Integre Vendas, Financeiro e Contabilidade em um único fluxo. Sem planilhas, sem fricção." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Metropolis:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --bg: #F4f3f2; /* Branco gelo */
+      --ink: #000000; /* Preto Absoluto */
+      --muted: #5c5c5c;
+      --line: #e0e0e0;
+      --brand: #7929E6; /* Violeta real */
+      --accent: #7929E6; /* Violeta real */
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family: 'Metropolis', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial; font-weight: 400; font-size: 16px; line-height: 1.6; transition: background-color 0.3s, color 0.3s;}
+    a,button{cursor:pointer; text-decoration: none; transition: all 0.2s ease-in-out;}
+    .container{max-width:1120px;margin:0 auto;padding:24px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;}
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+    .placeholder{background: #e9ecef; border-radius:10px;border:1px dashed var(--line); display: flex; align-items: center; justify-content: center; min-height: 180px;}
+    .h1{font-size: clamp(2rem, 5vw, 2.8rem); font-weight:800;margin:0 0 12px; line-height: 1.2;}
+    .h2{font-size: clamp(1.5rem, 4vw, 2rem);font-weight:700;margin:0 0 16px; line-height: 1.3;}
+    .lead{color:var(--muted); font-size: 1.1rem; font-weight: 400;}
+    .btn{padding:12px 24px;border-radius:8px;border:1px solid var(--line);background:#fff; color: var(--ink); display: inline-flex; align-items: center; justify-content: center; font-weight: 600;}
+    .btn:hover { background-color: #f1f3f5; border-color: var(--muted); }
+    .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+    .btn.primary:hover { background-color: #5f1bb3; border-color: #5f1bb3; }
+    .btn.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn.accent:hover { background-color: #5f1bb3; border-color: #5f1bb3; }
+    .btn.ghost{background:transparent}
+    .pill{font-size:12px;border:1px solid var(--line);padding:6px 12px;border-radius:999px;color:var(--muted); margin-right: 6px; margin-bottom: 6px; display: inline-block; background: #fff;}
+    /* NAV */
+    .nav{position:sticky;top:0;background:rgba(244, 243, 242, 0.8); backdrop-filter: blur(10px); border-bottom:1px solid var(--line);z-index:10}
+    .nav .inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .nav .menu{display:flex;gap:16px;align-items:center; flex-wrap: wrap;}
+    .nav a{color:inherit;text-decoration:none; font-weight: 600;}
+    .nav .link{padding:8px 12px;border-radius:8px;border:1px solid transparent;}
+    .nav .link:hover { background-color: #e9ecef; }
+    .nav .link.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+    /* LAYOUTS */
+    .section{padding:48px 0}
+    .cards-5, .cards-4, .cards-3, .cards-2 { display: grid; gap: 24px; }
+    .cards-5{grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));}
+    .cards-4{grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));}
+    .cards-3{grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
+    .cards-2{grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));}
+    .footer{padding:48px 0;border-top:1px solid var(--line);color:var(--muted); background: #fff;}
+    .page{display:none}
+    .page.active{display:block}
+    .hero{padding:64px 0;}
+    .hero .cols{display:grid;grid-template-columns:1fr;gap:32px;}
+    @media (min-width: 768px) { .hero .cols{grid-template-columns:1.1fr .9fr;} }
+    .hero .mock{height:340px}
+    .badges{display:flex;gap:8px;margin:16px 0; justify-content: flex-start;}
+    .cta{display:flex;gap:12px;margin-top:24px; align-items: center;}
+    details{border:1px solid var(--line);background:#fff;border-radius:12px;padding:16px}
+    details+details{margin-top:12px}
+    details summary{font-weight:700;cursor:pointer; list-style: none;}
+    details summary::-webkit-details-marker { display: none; }
+    details summary::after { content: '+'; float: right; font-size: 1.5rem; line-height: 1; }
+    details[open] summary::after { content: '−'; }
+    label{display:block;font-weight:600;margin:12px 0 6px}
+    input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff; font-size: 1rem;}
+    .form-row{display:grid;grid-template-columns:1fr;gap:16px}
+    @media (min-width: 768px) { .form-row{grid-template-columns:1fr 1fr;} }
+    .muted{color:var(--muted)}
+    /* Tabs internas (Dores) */
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+    .tab-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;font-weight:600}
+    .tab-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    /* Smooth scroll & transitions */
+    html{scroll-behavior:smooth}
+    .page.active{animation:fadeIn .3s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    /* ===== Tabela Comparativa Melhorada ===== */
+    .compare { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+    .compare th, .compare td { padding: 16px; text-align: left; border-bottom: 1px solid var(--line); }
+    .compare thead th { background-color: #f9fafb; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    .compare tbody tr:last-child td { border-bottom: none; }
+    .compare th:not(:first-child), .compare td:not(:first-child) { text-align: center; }
+    .compare th:nth-child(2), .compare td:nth-child(2) { background-color: #f2e9fd; font-weight: 600; }
+    @media (max-width: 960px) {
+      .compare thead { display: none; }
+      .compare tr { display: block; margin-bottom: 16px; border: 1px solid var(--line); border-radius: 8px; }
+      .compare tr:last-child { margin-bottom: 0; }
+      .compare td { display: flex; justify-content: space-between; align-items: center; text-align: right; border-bottom: 1px solid var(--line); }
+      .compare tr:last-of-type td:last-of-type { border-bottom: 0; }
+      .compare td::before { content: attr(data-label); font-weight: 600; text-align: left; margin-right: 12px; color: var(--ink); }
+    }
+    /* ===== Estilos da Aba de Produtos ===== */
+    #produtos .prod-container{max-width:1140px;margin:0 auto;padding:28px}
+    #produtos h2, #produtos h1{font-size:30px;line-height:1.2;margin:0 0 8px}
+    #produtos h3{font-size:22px;line-height:1.35;margin:18px 0 10px}
+    #produtos h4{margin:10px 0 4px}
+    #produtos .lead{color:var(--muted);font-size:15.5px;line-height:1.65}
+    #produtos .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    #produtos .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+    #produtos .hero{border:1px solid var(--line);border-radius:12px;padding:22px;background:#fff}
+    #produtos .cta{display:flex;gap:10px;flex-wrap:wrap}
+    #produtos .btn{appearance:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}
+    #produtos .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+    #produtos .chip{padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--pill);cursor:pointer}
+    #produtos .chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+    #produtos .grid-3{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+    #produtos .media{height:148px;border:1px dashed var(--line);border-radius:12px;background:#f8fafc;display:flex;align-items:center;justify-content:center;color:#9aa4b2; font-style: italic; margin-bottom: 1rem;}
+    #produtos .bullets{margin:8px 0 0 0;padding:0 0 0 18px}
+    #produtos .hero .cta { margin-top: 6px; }
+    #produtos .finder-card { margin-top: 14px; }
+    #produtos .finder-card .row { justify-content: space-between; }
+    #produtos .finder-card h3 { margin: 0; }
+    #produtos .finder-card .row div.row { gap: 8px; }
+    #produtos #prod-tabs { gap: 8px; margin: 14px 0; }
+    #produtos .card h4 + p + div { margin-top: 6px; }
+    #produtos .card .bullets + .cta { margin-top: 10px; }
+    #produtos .card p + .cta { margin-top: 10px; }
+    @media (max-width:980px){ #produtos .grid-3{grid-template-columns:1fr 1fr} }
+    @media (max-width:720px){ #produtos .grid-3{grid-template-columns:1fr} }
+    #produtos small.muted{color:#94a3b8}
+    #produtos select.input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+    #produtos .section-anchor{scroll-margin-top:90px}
+    /* ===== Estilos da Seção BPO Financeiro ===== */
+    #bpo .ftabs { margin-top: 2rem; }
+    #bpo .f-bar { display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    #bpo .f-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border: 1px solid transparent; border-radius: 8px; background-color: #f0f0f0; cursor: pointer; transition: background-color 0.2s, color 0.2s; font-size: 14px; }
+    #bpo .f-btn:hover { background-color: #e0e0e0; }
+    #bpo .f-btn.active { background-color: var(--brand); color: #fff; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    #bpo .f-panel { display: none; padding: 20px; border: 1px solid var(--line); border-top: none; border-radius: 0 0 8px 8px; animation:fadeIn .28s ease;}
+    #bpo .f-panel.active { display: block; }
+    #bpo .card h4 { font-size: 18px; margin-top: 0; margin-bottom: 0.5rem; }
+    .card-spacing { margin-top: 16px; }
+    /* ===== Estilos da Aba Tríade (Novos) ===== */
+    #triade .h1 { font-size: clamp(2.2rem, 3.6vw, 2.8rem); }
+    #triade .testimonial-card { display: flex; flex-direction: column; height: 100%; background: #fff; }
+    #triade .testimonial-card footer { margin-top: auto; padding-top: 1rem; font-weight: 600; color: var(--ink); }
+    #triade .selo-garantia span { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem .65rem; border-radius: 8px; background: #f0fdf4; color: #15803d; border:1px solid #bbf7d0; font-weight: 500;}
+    /* ===== Estilos da Aba Contabilidade ===== */
+    #contabilidade .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+    #contabilidade .pill-row .pill { border: 1px solid var(--line); border-radius: 999px; font-weight: 600; padding: 6px 12px; background: #fff; }
+    #contabilidade #ot-widget { border: 1px solid var(--line); border-radius: 14px; padding: 24px; background: #fff; }
+    #contabilidade #ot-widget .ot-header { text-align: center; margin-bottom: 16px; }
+    #contabilidade #ot-widget .ot-step { display: none; animation: fadeIn 0.5s; }
+    #contabilidade #ot-widget .ot-step.active { display: block; }
+    #contabilidade #ot-widget .ot-progress { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; margin: 16px 0; }
+    #contabilidade #ot-widget .ot-progress .bar { height: 100%; width: 16.6%; background: var(--accent); transition: width .5s ease-in-out; }
+    #contabilidade #ot-widget .ot-grid { display: grid; gap: 10px; }
+    #contabilidade #ot-widget .ot-grid.cols2 { grid-template-columns: 1fr 1fr; }
+    #contabilidade #ot-widget .ot-radio-label { display: block; border: 2px solid var(--line); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-weight: 500; transition: all 0.2s ease-in-out; }
+    #contabilidade #ot-widget .ot-radio-label:hover { border-color: var(--brand); }
+    #contabilidade #ot-widget input[type=radio] { display: none; }
+    #contabilidade #ot-widget input[type=radio]:checked + .ot-radio-label { border-color: var(--accent); background-color: #f2e9fd; color: var(--ink); font-weight: 700; }
+    #contabilidade #ot-widget .ot-actions { display: flex; justify-content: space-between; margin-top: 24px; }
+    #contabilidade #ot-widget .ot-result-container { text-align: center; }
+    #contabilidade #ot-widget .ot-result-box { background: #f2e9fd; border-left: 4px solid var(--accent); padding: 20px; border-radius: 10px; margin: 24px 0; }
+    #contabilidade #ot-widget #economia-valor { font-size: 32px; font-weight: 800; color: var(--brand); }
+    #contabilidade .timeline { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 20px; }
+    #contabilidade .timeline-step { flex: 0 0 280px; border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: #fff; }
+    #contabilidade .timeline-step .when { font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    #contabilidade .pilares-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; align-items: center; gap: 24px; }
+    #contabilidade .pilar-tabs .p-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    #contabilidade .pilar-tabs .p-btn { flex-grow: 1; padding: 10px; border: 2px solid var(--line); border-radius: 10px; background: #fff; font-weight: 600; text-align: center; }
+    #contabilidade .pilar-tabs .p-btn.active { border-color: var(--brand); background-color: var(--brand); color: #fff; }
+    #contabilidade .pilar-tabs .p-panel { display: none; border: 1px solid var(--line); padding: 16px; border-radius: 12px; min-height: 100px; }
+    #contabilidade .pilar-tabs .p-panel.active { display: block; }
+    #contabilidade .pilar-cta { margin-top: 20px; text-align: right; }
+    #contabilidade .callout-card { background: linear-gradient(to right, #f2e9fd, #f8f7f6); }
+    @media (max-width: 768px) {
+      #contabilidade .pilares-grid { grid-template-columns: 1fr; }
+      #contabilidade .pilar-gauge { display: none; }
+    }
+     /* ===== Estilos da Aba ROI ===== */
+    #roi-calculator-container .screen { display: none; animation: fadeIn 0.5s; }
+    #roi-calculator-container .screen.active { display: block; }
+    #roi-calculator-container .spinner { border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid #fff; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    /* ===== Estilos da Aba Blog ===== */
+    #blog-filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 2rem; border-bottom: 1px solid var(--line); padding-bottom: 1.5rem; }
+    .blog-article-card { display: flex; flex-direction: column; height: 100%; }
+    .blog-article-card .card-content { flex-grow: 1; display: flex; flex-direction: column; }
+    .blog-article-card .cta { margin-top: auto; }
+  </style>
+</head>
+<body>
+  <a href="#conteudo" style="position:absolute; left:-999px;">Pular para o conteúdo</a>
+  <div class="nav">
+    <div class="container inner">
+      <div class="row" style="align-items:center">
+        <img src="http://googleusercontent.com/file_content/1" alt="Logo Gestão 360" style="height: 32px;">
+      </div>
+      <div class="menu">
+        <a class="link" data-nav="home" href="#home">Início</a>
+        <a class="link" data-nav="bpo" href="#bpo">BPO Financeiro</a>
+        <a class="link" data-nav="contabilidade" href="#contabilidade">Contabilidade</a>
+        <a class="link" data-nav="triade" href="#triade">Tríade</a>
+        <a class="link" data-nav="produtos" href="#produtos">Produtos</a>
+        <a class="link" data-nav="blog" href="#blog">Blog</a>
+        <a class="link" data-nav="faq" href="#faq">FAQ</a>
+        <a class="link" data-nav="roi" href="#roi">Simular economia</a>
+        <a class="btn primary" data-nav="agenda" href="#agenda">Agendar apresentação</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="conteudo">
+    <div class="page active" id="home" data-page>
+      <header class="container hero"><div class="hero cols"><div><h1 class="h1">Terceirize seu Financeiro. Ganhe Inteligência para Decidir.</h1><p class="lead">Plataforma + equipe que organiza, concilia e analisa seus números — para você focar no crescimento.</p><div class="badges"><span class="pill">+120 empresas</span><span class="pill">NPS 86</span><span class="pill">Você aprova pagamentos</span></div><div class="cta"><a class="btn accent" href="#agenda" data-nav="agenda">Agendar demonstração</a><a class="btn" href="#relatorios" data-nav="relatorios">Ver relatórios em ação</a></div></div><div class="placeholder mock"></div></div></header>
+      <section class="container section"><h2 class="h2">Quando você começa a sentir o valor</h2><div class="cards-3"><div class="card"><strong>Semanas 1–4</strong><p class="lead">Onboarding, parametrização (centros de custo, rateios), rotinas rodando.</p></div><div class="card"><strong>~3 meses</strong><p class="lead">Benefícios começam a aparecer de forma consistente.</p></div><div class="card"><strong>6–12 meses</strong><p class="lead">Rumo claro do negócio; contrato anual para medir ROI.</p></div></div></section>
+      <section class="container section"><h2 class="h2">Sua gestão financeira parece um segundo emprego?</h2><p class="lead">Mapeamos as dores mais comuns que tiram o foco do que realmente importa: o crescimento do seu negócio.</p><div class="tabs"><button class="tab-btn active" data-tab="dor-tempo">Falta de Tempo</button><button class="tab-btn" data-tab="dor-clareza">Falta de Clareza</button><button class="tab-btn" data-tab="dor-crescimento">Crescimento Desordenado</button></div><div class="card"><div class="tab-panel active" id="dor-tempo"><h3 class="h2">"Passo mais tempo em planilhas do que com clientes."</h3><p class="lead">A rotina de conferir extratos, cobrar clientes e agendar pagamentos consome horas preciosas. Nossa equipe assume 100% do seu operacional financeiro, liberando sua agenda para decisões estratégicas.</p></div><div class="tab-panel" id="dor-clareza"><h3 class="h2">"Não sei para onde o dinheiro está indo."</h3><p class="lead">Sem uma visão clara de custos, despesas e margens, qualquer decisão se torna um risco. Transformamos seus dados em relatórios visuais (DRE, Fluxo de Caixa) que mostram a saúde real da sua empresa.</p></div><div class="tab-panel" id="dor-crescimento"><h3 class="h2">"Estamos crescendo, mas o caixa está sempre apertado."</h3><p class="lead">Crescer sem planejamento financeiro pode levar a problemas de capital de giro. Criamos um fluxo de caixa projetado para dar previsibilidade e garantir que seu crescimento seja sustentável.</p></div></div></section>
+      <section class="container section"><h2 class="h2">Para quem é</h2><div class="cards-4"><div class="card"><strong>Comércio</strong><ul class="lead" style="padding-left: 1.2em; margin-top: 8px;"><li>Receita líquida pós taxas (Pix/cartão) e conciliação diária.</li><li>Giro e cobertura de estoque por categoria.</li><li>Margem por produto e ticket médio com sazonalidade.</li><li>CFOP/NCM corretos e emissão ágil de NF-e.</li></ul></div><div class="card"><strong>Serviços</strong><ul class="lead" style="padding-left: 1.2em; margin-top: 8px;"><li>Precificação por hora/escopo e margem por contrato.</li><li>MRR/recorrência, inadimplência e cobrança automatizada.</li><li>DRE gerencial por centro de custo e unidade.</li><li>Fluxo projetado para previsibilidade de caixa.</li></ul></div><div class="card"><strong>Comércio & Serviço</strong><ul class="lead" style="padding-left: 1.2em; margin-top: 8px;"><li>Estrutura híbrida com centros de custo para receitas acessórias.</li><li>Comissões e rateios claros entre venda e execução.</li><li>Emissão de NFs (produto/serviço) e regras fiscais integradas.</li><li>Visão consolidada e por unidade para decisões rápidas.</li></ul></div><div class="card"><strong>Indústria</strong><ul class="lead" style="padding-left: 1.2em; margin-top: 8px;"><li>Custo padrão × real (insumos, mão de obra, overhead).</li><li>WIP/estoque de produção e ponto de equilíbrio.</li><li>Formação de preço e rentabilidade por linha.</li><li>ICMS-ST e obrigações com trilha de auditoria.</li></ul></div></div></section>
+      <section class="container section"><h2 class="h2">Soluções para o seu Próximo Nível</h2><div class="cards-4"><div class="card"><strong>Gestão de multi-CNPJ</strong><p class="lead">Entregamos visão consolidada, por unidade e análise de performance.</p></div><div class="card"><strong>Gestão e Análise contínua</strong><p class="lead">Analisamos sua empresa mensalmente para garantir que você esteja sempre na melhor e menor tributação.</p></div><div class="card"><strong>Consultoria G360</strong><p class="lead">Oferecendo soluções estratégicas e tecnológicas para melhorar suas finanças e sua gestão.</p></div><div class="card"><strong>Quem busca ser competitivo no mercado</strong><p class="lead">Transformamos seus dados em insights competitivos para te posicionar como uma empresa de alta performance.</p></div></div></section>
+      <section class="container section"><h2 class="h2">Financeiro + Contabilidade, alinhados ao crescimento</h2><div class="card"><p class="lead">Nosso BPO convive com seu ERP e organiza o pacote contábil com lastro e relatórios gerenciais. Em parceria, a <strong>Contabilidade</strong> avança para planejamento tributário, contabilidade gerencial e <strong>estratégias de vendas com eficiência fiscal</strong> — sem bloquear sua operação.</p><div class="cta" style="margin-top:12px;"><a class="btn" href="#contabilidade" data-nav="contabilidade">Explorar Contabilidade</a></div></div></section>
+      <section class="container section"><div class="card"><h2 class="h2">Um Comparativo para sua Decisão Estratégica</h2><div class="table-wrap"><table class="compare"><thead><tr><th>Critério</th><th>Gestão 360</th><th>Equipe interna</th><th>Contabilidade / Ferramenta</th></tr></thead><tbody><tr><td data-label="Critério">Setup e Onboarding</td><td data-label="Gestão 360">Guiado e Personalizado</td><td data-label="Equipe interna">Requer contratação e treinamento</td><td data-label="Contabilidade / Ferramenta">Autoatendimento (DIY)</td></tr><tr><td data-label="Critério">Operação diária por time externo</td><td data-label="Gestão 360">Sim</td><td data-label="Equipe interna">Não</td><td data-label="Contabilidade / Ferramenta">Não</td></tr><tr><td data-label="Critério">Multi-CNPJ e rateios</td><td data-label="Gestão 360">Sim</td><td data-label="Equipe interna">Complexo</td><td data-label="Contabilidade / Ferramenta">Limitado</td></tr><tr><td data-label="Critério">Automação de pagamentos</td><td data-label="Gestão 360">Opcional Asaas</td><td data-label="Equipe interna">Parcial</td><td data-label="Contabilidade / Ferramenta">Limitado</td></tr><tr><td data-label="Critério">Cobrança ativa humana</td><td data-label="Gestão 360">Não, disponibilizamos automações por IA</td><td data-label="Equipe interna">Sim</td><td data-label="Contabilidade / Ferramenta">Não</td></tr><tr><td data-label="Critério">Relatórios para Diretoria/Conselho</td><td data-label="Gestão 360">Sim, prontos para apresentação</td><td data-label="Equipe interna">Depende da senioridade do time</td><td data-label="Contabilidade / Ferramenta">Apenas dados brutos</td></tr><tr><td data-label="Critério">Análise gerencial recorrente</td><td data-label="Gestão 360">Sim</td><td data-label="Equipe interna">Depende</td><td data-label="Contabilidade / Ferramenta">Não</td></tr><tr><td data-label="Critério">Apoio Estratégico Proativo</td><td data-label="Gestão 360">Analista dedicado + Comitês mensais</td><td data-label="Equipe interna">Reativo às demandas internas</td><td data-label="Contabilidade / Ferramenta">Nenhum (suporte técnico)</td></tr><tr><td data-label="Critério">Planejamento tributário</td><td data-label="Gestão 360">Sim, indepente do porte</td><td data-label="Equipe interna">Depende</td><td data-label="Contabilidade / Ferramenta">Limitado</td></tr><tr><td data-label="Critério">Redução de impostos (estratégia)</td><td data-label="Gestão 360">Sim</td><td data-label="Equipe interna">Depende</td><td data-label="Contabilidade / Ferramenta">Limitado</td></tr><tr><td data-label="Critério">Redução de custos</td><td data-label="Gestão 360">Estratégica, com foco em eficiência</td><td data-label="Equipe interna">Depende</td><td data-label="Contabilidade / Ferramenta">Limitado</td></tr><tr><td data-label="Critério">Estratégias comerciais c/ eficiência fiscal</td><td data-label="Gestão 360">Sim</td><td data-label="Equipe interna">Raro</td><td data-label="Contabilidade / Ferramenta">Não</td></tr><tr><td data-label="Critério">Contabilidade Gerencial</td><td data-label="Gestão 360">Completa</td><td data-label="Equipe interna">Parcial</td><td data-label="Contabilidade / Ferramenta">Básica</td></tr></tbody></table></div></div></section>
+      <section class="container section"><h2 class="h2">Perguntas rápidas</h2><div class="cards-2"><details><summary>Preciso trocar meu ERP?</summary><p class="lead" style="margin-top: 8px;">Não. Entendemos seu ERP, trabalhamos na importação de informações e disponibilizamos o seu ERP Financeiro do Gestão 360.</p></details><details><summary>É obrigatório usar Asaas?</summary><p class="lead" style="margin-top: 8px;">Não. É opcional — acelera pagamentos, aprovações, automações e relatórios.</p></details><details><summary>Quando vejo resultado?</summary><p class="lead" style="margin-top: 8px;">Primeiras semanas com rotinas; leitura consistente ~3 meses.</p></details><details><summary>Vocês fazem cobrança ativa por telefone?</summary><p class="lead" style="margin-top: 8px;">Não. Disponibilizamos de uma automação de cobranças pelos canais WhatsApp, e-mail e SMS.</p></details><details><summary>Atendem multi-CNPJ?</summary><p class="lead" style="margin-top: 8px;">Sim, com visão consolidada e por unidade.</p></details></div></section>
+      <section class="container section"><div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap: wrap;"><div style="flex: 1 1 300px;"><h2 class="h2" style="margin-bottom:0;">Pronto para tirar decisões do escuro?</h2></div><div style="flex: 0 0 auto;"><a class="btn primary" href="#agenda" data-nav="agenda">Agendar apresentação</a></div></div></section>
+    </div>
+
+    <div class="page" id="bpo" data-page>
+      <div class="container section">
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+          <h2 class="h1">Recupere o Foco no seu Negócio.</h2>
+          <p class="lead">Deixe a Gestão Financeira com Especialistas. Operamos o seu financeiro com rigor, governança e transparência — e transformamos dados em orientação executiva. BPO completo + automação + relatórios gerenciais + analista dedicado. <strong>Você aprova os pagamentos</strong>.</p>
+        </div>
+        <h3 class="h2" style="margin-top: 2.5rem; margin-bottom: 1.5rem; text-align: center;">Veja abaixo o que terceirizamos da sua operação</h3>
+        <div class="ftabs" id="bpo-ftabs">
+          <div class="f-bar" role="tablist" aria-label="Funcionalidades do BPO">
+            <button class="f-btn active" data-fpanel="fp-pagar" role="tab" aria-selected="true" id="tab-pagar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><span>Contas a Pagar/Receber</span></button>
+            <button class="f-btn" data-fpanel="fp-recon" role="tab" aria-selected="false" id="tab-recon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"></path></svg><span>Conciliação Bancária</span></button>
+            <button class="f-btn" data-fpanel="fp-relat" role="tab" aria-selected="false" id="tab-relat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg><span>Relatórios Gerenciais</span></button>
+            <button class="f-btn" data-fpanel="fp-consul" role="tab" aria-selected="false" id="tab-consul"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg><span>Consultoria Financeira</span></button>
+            <button class="f-btn" data-fpanel="fp-caixa" role="tab" aria-selected="false" id="tab-caixa"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"></path></svg><span>Fluxo de Caixa</span></button>
+            <button class="f-btn" data-fpanel="fp-auto" role="tab" aria-selected="false" id="tab-auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-4M12 4v4M4 12h4M16 12h4M19.07 4.93l-2.83 2.83M7.76 16.24l-2.83 2.83M19.07 19.07l-2.83-2.83M7.76 7.76L4.93 4.93"></path><circle cx="12" cy="12" r="2"></circle></svg><span>Automações</span></button>
+            <button class="f-btn" data-fpanel="fp-nfe" role="tab" aria-selected="false" id="tab-nfe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg><span>Emissão de NF</span></button>
+          </div>
+          <div class="f-panel active" id="fp-pagar" role="tabpanel" aria-labelledby="tab-pagar"><div class="cards-2"><div class="card"><h4>Organização e Pontualidade: Seu Ciclo Financeiro sob Controle</h4><p class="lead">Assumimos a complexidade do seu contas a pagar e receber, garantindo que cada lançamento seja classificado, agendado e tenha um comprovante anexo. Você mantém o controle total com um fluxo de aprovação simples, mas ganha tempo para focar no que realmente importa.</p><ul class="lead"><li><strong>Diferenciais:</strong> Governança com aprovação executiva, comprovantes digitais com um clique e automação de pagamentos em lote (via Asaas opcional).</li><li><strong>Resolve:</strong> Atrasos com fornecedores, retrabalho da equipe e a falta de visibilidade sobre as saídas de caixa.</li></ul></div><div class="card"><h4>Ideal para empresas que precisam:</h4><ul class="lead"><li>Garantir pontualidade com fornecedores e fortalecer o relacionamento.</li><li>Ter previsibilidade diária de entradas e saídas para um fluxo de caixa saudável.</li><li>Reduzir a inadimplência com um processo de cobrança mais eficiente.</li></ul></div></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Veja na prática como organizamos seus pagamentos e recebimentos na plataforma.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Nossa IA analisa seus padrões e gera insights sobre seu ciclo de pagamentos.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+          <div class="f-panel" id="fp-recon" role="tabpanel" aria-labelledby="tab-recon"><div class="cards-2"><div class="card"><h4>Conciliação Bancária</h4><p class="lead">Conferimos extratos × lançamentos (multi-conta/cartões) para que o saldo exibido seja o <strong>saldo real</strong>. Tratamos taxas, estornos e pendências com precisão.</p><ul class="lead"><li><strong>Diferenciais:</strong> integrações multi-banco/maquininhas • conciliação contínua • trilha de auditoria completa.</li><li><strong>Resolve:</strong> erros, fraudes e "surpresas" no fechamento.</li></ul></div><div class="card"><h4>Empresas que procuram:</h4><ul class="lead"><li>Visão unificada com várias contas/maquininhas.</li><li>Fechamento sem sustos e com lastro.</li><li>Audit trail para conselho e bancos.</li></ul></div></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Espaço para imagens do sistema e texto explicativo.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Espaço para imagens e/ou vídeos dos relatórios gerados pela nossa IA.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+          <div class="f-panel" id="fp-relat" role="tabpanel" aria-labelledby="tab-relat"><div class="cards-2"><div class="card"><h4>Relatórios Gerenciais que Geram Decisões</h4><p class="lead">Transformamos dados brutos em inteligência acionável. Nossos relatórios — DRE, Fluxo de Caixa Projetado, Orçado vs. Realizado e KPIs — são desenhados para conectar os desafios do seu negócio diretamente às decisões estratégicas, prontos para apresentar ao seu conselho ou diretoria.</p><ul class="lead"><li><strong>Diferenciais:</strong> Visão consolidada para multi-CNPJ e centros de custo, rateios precisos e anexos de lastro para cada número apresentado.</li><li><strong>Resolve:</strong> Visão distorcida do resultado, metas sem fundamento e dificuldade na priorização de investimentos.</li></ul></div><div class="card"><h4>Ideal para empresas que precisam:</h4><ul class="lead"><li>De material executivo e confiável para reuniões de conselho e investidores.</li><li>Entender a margem real de lucro por cliente, produto ou unidade de negócio.</li><li>Criar uma agenda de prioridades orientada por dados financeiros claros.</li></ul></div></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Espaço para imagens do sistema e texto explicativo.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Espaço para imagens e/ou vídeos dos relatórios gerados pela nossa IA.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+          <div class="f-panel" id="fp-consul" role="tabpanel" aria-labelledby="tab-consul"><div class="cards-2"><div class="card"><h4>Análise Estratégica: Seu CFO as a Service</h4><p class="lead">Não entregamos apenas relatórios; entregamos direção. Nosso analista dedicado atua como um parceiro estratégico, interpretando seus números, recomendando ações e acompanhando a execução. Através de rituais mensais (comitês), transformamos dados em um plano de ação claro, com metas e responsáveis.</p><ul class="lead"><li><strong>Diferenciais:</strong> Governança com SLA definido para cada rotina, foco nos indicadores críticos para o seu negócio e acompanhamento executivo contínuo.</li><li><strong>Resolve:</strong> A paralisia causada por relatórios "frios" e a falta de uma direção tática e estratégica clara para o crescimento.</li></ul></div><div class="card"><h4>Ideal para empresas que precisam:</h4><ul class="lead"><li>Definir e seguir uma direção estratégica de 3, 6 e 12 meses com disciplina.</li><li>Garantir o alinhamento entre a visão da gestão e a execução do time operacional.</li></ul></div></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Espaço para imagens do sistema e texto explicativo.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Espaço para imagens e/ou vídeos dos relatórios gerados pela nossa IA.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+          <div class="f-panel" id="fp-caixa" role="tabpanel" aria-labelledby="tab-caixa"><div class="cards-2"><div class="card"><h4>Previsibilidade e Controle: O Futuro do seu Caixa, Hoje</h4><p class="lead">Antecipe o futuro do seu caixa. Projetamos suas entradas e saídas com precisão, considerando centros de custo, sazonalidade e impostos. Mais do que um relatório, mostramos quanto tempo seu caixa dura em diferentes cenários e sinalizamos janelas de risco antes que elas aconteçam.</p><ul class="lead"><li><strong>Diferenciais:</strong> Simulação de cenários (base, otimista, pessimista), alarmes automáticos por tetos de gasto e visão consolidada por unidade de negócio.</li><li><strong>Resolve:</strong> O "sufoco" de capital de giro, decisões de investimento baseadas em achismos e os imprevistos que comprometem a operação.</li></ul></div><div class="card"><h4>Ideal para empresas que precisam:</h4><ul class="lead"><li>Aumentar as semanas de previsibilidade de caixa para tomar decisões com mais segurança.</li><li>Planejar investimentos, contratações e capital de giro em períodos de expansão ou sazonalidade.</li></ul></div></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Espaço para imagens do sistema e texto explicativo.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Espaço para imagens e/ou vídeos dos relatórios gerados pela nossa IA.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+          <div class="f-panel" id="fp-auto" role="tabpanel" aria-labelledby="tab-auto"><div class="cards-2"><div class="card"><h4>Menos Tarefas, Mais Estratégia: Automatize seu Financeiro</h4><p class="lead">Liberte sua equipe de tarefas repetitivas. Nossa plataforma automatiza os processos que mais consomem tempo: agendamento de pagamentos em lote, baixa automática de recebíveis, réguas de cobrança via WhatsApp, e-mail e SMS, e a classificação inteligente de despesas.</p><ul class="lead"><li><strong>Diferenciais:</strong> Flexibilidade total com Asaas (opcional para máxima automação) ou operando diretamente com seus bancos atuais.</li><li><strong>Resolve:</strong> Erros de digitação, falhas humanas e as horas de trabalho perdidas em rotinas que a tecnologia pode fazer por você.</li></ul></div><div class="card"><h4>Ideal para empresas que precisam:</h4><ul class="lead"><li>Padronizar rotinas financeiras para escalar a operação com segurança e qualidade.</li><li>Liberar tempo valioso da equipe e dos gestores para que possam focar no crescimento do negócio.</li></ul></div></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Espaço para imagens do sistema e texto explicativo.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Espaço para imagens e/ou vídeos dos relatórios gerados pela nossa IA.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+          <div class="f-panel" id="fp-nfe" role="tabpanel" aria-labelledby="tab-nfe"><div class="cards-2"><div class="card"><h4>Faturamento e Compliance: Emita suas Notas Fiscais sem Esforço</h4><p class="lead">Garanta um faturamento ágil e 100% em conformidade fiscal. Nosso processo de emissão de NF-e e NFS-e é totalmente integrado ao contas a receber, o que significa que cada venda se reflete automaticamente na sua previsibilidade de caixa.</p><ul class="lead"><li><strong>Diferenciais:</strong> Conexão direta da Nota Fiscal ao recebimento, com um dashboard exclusivo para monitorar a inadimplência.</li><li><strong>Resolve:</strong> Falhas de compliance que geram multas e os atrasos no faturamento que comprometem o fluxo de caixa.</li></ul></div><div class="card"><h4>Ideal para empresas que precisam:</h4><ul class="lead"><li>Garantir o compliance fiscal em 100% das transações, sem esforço manual.</li><li>De um processo de emissão de notas ágil e totalmente integrado ao financeiro.</li></ul></div><div class="cards-2 card-spacing"><div class="card"><h4>Visão do sistema</h4><p class="lead">Espaço para imagens do sistema e texto explicativo.</p><div class="placeholder"></div></div><div class="card"><h4>Relatórios IA G360</h4><p class="lead">Espaço para imagens e/ou vídeos dos relatórios gerados pela nossa IA.</p><div class="placeholder"></div></div></div><h3 class="h2 card-spacing">Onboarding guiado & Atualização diária</h3><div class="cards-2"><div class="card"><h4>Onboarding guiado</h4><p class="lead">Setup em 1–3 semanas: centros de custo, rateios, integrações e treinamento. Entregas por etapa e cronograma claro.</p></div><div class="card"><h4>Atualização diária</h4><p class="lead">Conciliações e alimentação de dados para saldos e relatórios sempre atualizados.</p></div></div><div class="card card-spacing"><ul class="lead"><li><strong>Você aprova os pagamentos</strong> — mantemos seu controle com token e rastro.</li><li><strong>Dados auditáveis</strong> — cada número tem lastro e comprovante clicável.</li></ul></div><div class="cta card-spacing"><a class="btn" data-nav="roi" href="#roi">Simular economia</a><a class="btn accent" data-nav="agenda" href="#agenda">Agendar apresentação</a></div></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="page" id="contabilidade" data-page>
+        <div class="container">
+            <header><h2 class="h1">Clareza nos números. Eficiência fiscal. Crescimento seguro.</h2><p class="lead">Planejamento tributário, estratégias para reduzir impostos <em>dentro da lei</em> e relatórios com leitura executiva — tudo voltado à sua tomada de decisão e à evolução sustentável do negócio.</p><div class="pill-row"><span class="pill">Atendimento Nacional</span><span class="pill">B.I Contábil</span><span class="pill">Recuperação tributária</span><span class="pill">Planos de acordo com o seu perfil</span></div><div class="cta" style="margin-top:0;"><a class="btn primary" href="#agenda" data-nav="agenda">Agendar apresentação – Contabilidade</a><a class="btn" href="#">Receber modelo de relatório gerencial</a></div></header>
+            <section class="section"><h3 class="h2">Para quem é</h3><div class="cards-3"><div class="card"><h4>Para Startups em Tração</h4><p class="lead">Seu foco está no produto, em conquistar clientes e em garantir a próxima rodada de investimento. Mas quem está de olho no <strong>burn rate</strong>, organizando os números para os investidores e garantindo que a estrutura fiscal do seu negócio nasça de forma inteligente? Deixe a complexidade financeira conosco e ganhe a tranquilidade para focar 100% em escalar.</p></div><div class="card"><h4>Para Pequenas Empresas em Organização</h4><p class="lead">Você sobreviveu à fase inicial, mas agora o volume operacional transformou a gestão em um desafio diário. As planilhas se multiplicam, o controle do fluxo de caixa é reativo e a falta de clareza sobre a lucratividade real impede decisões mais ousadas. É hora de transformar o caos em controle e ter números que trabalham a seu favor.</p></div><div class="card"><h4>Para Médias Empresas em Expansão</h4><p class="lead">Sua complexidade aumentou: múltiplos centros de custo, necessidade de relatórios para diretoria e um planejamento tributário que pode significar milhões em economia. Você precisa da sofisticação de um CFO, mas sem o custo de um executivo sênior. Oferecemos a inteligência e a governança que sua empresa precisa para dar o próximo salto de forma segura e estratégica.</p></div></div></section>
+            <section class="section"><h2 class="h2">Nosso Método: Do Diagnóstico à Ação Estratégica</h2><div class="cards-3"><div class="card"><h4>1. Diagnóstico Preciso</h4><p class="lead">Mergulhamos nos seus números e na sua operação para entender não apenas o seu balanço, mas o seu modelo de negócio. Mapeamos os pontos de ineficiência, os riscos fiscais e as oportunidades de otimização que passam despercebidas.</p></div><div class="card"><h4>2. Planejamento Sob Medida</h4><p class="lead">Com o diagnóstico em mãos, desenhamos um plano tributário e contábil único para sua empresa. Definimos o regime ideal, estruturamos processos e criamos relatórios gerenciais que transformam dados em respostas claras para suas decisões.</p></div><div class="card"><h4>3. Acompanhamento Contínuo</h4><p class="lead">Não entregamos um plano e desaparecemos. Atuamos como seu parceiro financeiro contínuo, com comitês mensais, reavaliação de estratégias e suporte proativo para garantir que sua empresa não apenas economize, mas cresça de forma sustentável e segura.</p></div></div></section>
+            <section class="section"><div class="card callout-card"><div class="pilares-grid"><div class="callout-grid-text"><h2>Sua contabilidade deve impulsionar seu crescimento, não apenas apurar impostos.</h2><p class="lead">Junte-se a centenas de empresas que transformaram sua contabilidade de uma obrigação para uma ferramenta de inteligência e decisão. Nosso processo de migração é simples, seguro e sem interrupções na sua operação.</p><div class="cta"><a class="btn primary" href="#agenda" data-nav="agenda">Troque de contador</a></div></div><div class="placeholder"></div></div></div></section>
+            <section class="section"><div id="ot-widget"><div id="header" class="ot-header"><h2 class="h2">Você tem dúvidas se a sua empresa paga impostos demais?</h2><p class="lead">Faça um diagnóstico rápido e descubra oportunidades de economia.</p></div><form id="tax-form"><div class="ot-progress"><div id="progress-bar" class="bar"></div></div><div id="step-1" class="ot-step active"><label class="h2" style="font-size:18px; text-align:center; margin-bottom:1rem;">Qual o seu regime tributário atual?</label><div class="ot-grid"><div><input type="radio" id="simples" name="regime_atual" value="Simples Nacional" checked><label for="simples" class="ot-radio-label">Simples Nacional</label></div><div><input type="radio" id="presumido" name="regime_atual" value="Lucro Presumido"><label for="presumido" class="ot-radio-label">Lucro Presumido</label></div><div><input type="radio" id="real" name="regime_atual" value="Lucro Real"><label for="real" class="ot-radio-label">Lucro Real</label></div></div></div><div id="step-2" class="ot-step"><label class="h2" style="font-size:18px; text-align:center; margin-bottom:1rem;">Ótimo! Agora, precisamos dos seus dados de contato.</label><div class="form-row" style="grid-template-columns: 1fr;"><input type="text" id="cnpj" placeholder="CNPJ da empresa" required><input type="tel" id="whatsapp" placeholder="Número de WhatsApp com DDD" required></div><p id="tax-form-message" class="lead" style="font-size: 13px; text-align: center; margin-top: 1rem; height: 16px; color: #ef4444;"></p></div><div id="step-3" class="ot-step"><label for="faturamento" class="h2" style="font-size:18px; text-align:center; margin-bottom:1rem;">Qual o faturamento bruto mensal da sua empresa?</label><div><input type="range" id="faturamento" min="5000" max="400000" step="1000" value="80000" class="w-full"><div id="faturamento-valor" class="h2" style="text-align:center; margin-top:1rem;">R$ 80.000</div></div></div><div id="step-4" class="ot-step"><label class="h2" style="font-size:18px; text-align:center; margin-bottom:1rem;">Qual a sua atividade principal?</label><div class="ot-grid cols2"><div><input type="radio" id="comercio" name="atividade" value="comercio" checked><label for="comercio" class="ot-radio-label">🛒<p>Comércio</p></label></div><div><input type="radio" id="industria" name="atividade" value="industria"><label for="industria" class="ot-radio-label">🏭<p>Indústria</p></label></div><div><input type="radio" id="servicos" name="atividade" value="servicos"><label for="servicos" class="ot-radio-label">🛠️<p>Serviços em Geral</p></label></div><div><input type="radio" id="servicos_profissionais" name="atividade" value="servicos_profissionais"><label for="servicos_profissionais" class="ot-radio-label">💼<p>Serviços Profissionais</p></label></div></div></div><div id="step-5" class="ot-step"><label class="h2" style="font-size:18px; text-align:center; margin-bottom:1rem;">Qual o custo mensal com a folha de pagamento?</label><div class="form-row"><input type="number" id="salarios" placeholder="Salários + Encargos"><input type="number" id="prolabore" placeholder="Pró-labore"></div></div><div id="step-6" class="ot-step"><label for="despesas" class="h2" style="font-size:18px; text-align:center; margin-bottom:1rem;">Qual a média de despesas operacionais mensais?</label><p class="lead" style="text-align:center; margin-top:-1rem; margin-bottom:1rem;">(Aluguel, fornecedores, etc. - exceto impostos)</p><input type="number" id="despesas" placeholder="Ex: 25000"></div><div class="ot-actions"><button type="button" id="prev-btn" class="btn ghost" disabled>Anterior</button><button type="button" id="next-btn" class="btn primary">Próximo</button><button type="button" id="submit-btn" class="btn primary" style="display:none; background-color: var(--accent); border-color: var(--accent);">Ver Prévia da Economia</button></div></form><div id="results-container" style="display:none;" class="ot-result-container"><h2 class="h2">Análise Preliminar Concluída!</h2><p class="lead">Vamos enviar o diagnóstico completo para nossos especialistas e retornaremos para você via WhatsApp.</p><p class="lead" style="font-weight: 600; color: var(--ink); margin-top:1rem;">Mas segue uma prévia do quanto você pode ter de economia mensal estimada:</p><div class="ot-result-box"><p id="economia-valor" class="h1">R$ 0,00</p><p class="lead" style="margin-top:0.5rem;">Com base em uma mudança para o regime ideal para o seu negócio.</p></div><a id="cta-final" href="#" class="btn primary" style="background-color: var(--accent); border-color: var(--accent);">Solicitar Diagnóstico de Impacto</a><p class="lead" style="font-size:12px; margin-top:1rem;">*Esta é uma simulação superficial e não substitui um planejamento tributário completo.</p></div></div></section>
+            <section class="section"><h2 class="h2">Reforma Tributária: Não espere o futuro chegar. Prepare sua empresa hoje!</h2><p class="lead">A maior transformação fiscal do Brasil está em andamento. Sua empresa está pronta para navegar pela transição e aproveitar as novas oportunidades? A Reforma não é apenas uma mudança de alíquotas, é uma reestruturação completa na forma como as empresas apuram e pagam impostos. Deixar para depois significa arriscar perdas financeiras, problemas de compliance e perda de competitividade. Nossa equipe de especialistas já está mergulhada nas novas regras para oferecer um diagnóstico preciso e um plano de adequação claro para o seu negócio.</p><div class="card card-spacing"><h3 class="h2" style="font-size: 18px;">Nossos Serviços de Adequação Incluem</h3><ul class="lead" style="padding-left: 1.2em; margin-top: 8px;"><li><strong>Diagnóstico de Impacto:</strong> Análise detalhada de como a CBS, o IBS e o Imposto Seletivo afetarão suas operações, preços e margens de lucro.</li><li><strong>Planejamento Estratégico:</strong> Redesenho de processos fiscais e operacionais para garantir 100% de compliance e otimizar sua carga tributária.</li><li><strong>Implementação e Suporte:</strong> Acompanhamento completo na adaptação de sistemas (ERP), treinamento de equipes e gestão da transição.</li></ul></div><h3 class="h2 card-spacing">O Caminho para a Conformidade: Nosso Plano de Ação</h3><div class="timeline"><div class="timeline-step"><div class="when">🗺️ (2024–2025) Fase 1: Diagnóstico</div><p class="lead" style="font-size: 13px;">Análise de impacto, mapeamento de processos e definição da estratégia de transição para o seu negócio.</p></div><div class="timeline-step"><div class="when">🔁 (2026) Fase 2: Transição</div><p class="lead" style="font-size: 13px;">Início da implementação do IVA Dual (CBS e IBS) com alíquotas de teste e ajustes práticos em sistemas.</p></div><div class="timeline-step"><div class="when">✅ (2027–2028) Fase 3: Adaptação</div><p class="lead" style="font-size: 13px;">CBS substitui PIS/COFINS. IBS entra em vigor. Validação dos novos processos para garantir compliance total.</p></div><div class="timeline-step"><div class="when">📈 (2029–2032) Fase 4: Consolidação</div><p class="lead" style="font-size: 13px;">Extinção gradual de ICMS e ISS. Foco na otimização contínua da carga tributária no novo modelo.</p></div></div></section>
+            <section class="section"><div class="pilares-grid"><div class="pilar-gauge"><div class="placeholder" style="height: 250px; width: 250px; border-radius: 50%;"></div></div><div class="pilar-content"><h2 class="h2">A análise considera quatro pilares essenciais</h2><div class="pilar-tabs" id="pilares-reforma"><div class="p-bar" role="tablist"><button class="p-btn active" data-panel="p-estrategia" role="tab">Estratégia</button><button class="p-btn" data-panel="p-operacao" role="tab">Operação</button><button class="p-btn" data-panel="p-tecnologia" role="tab">Tecnologia</button><button class="p-btn" data-panel="p-pessoas" role="tab">Pessoas</button></div><div class="p-panel active" id="p-estrategia" role="tabpanel"><p class="lead">Analisamos o impacto da reforma no seu modelo de negócio, do <strong>planejamento tributário</strong> ao impacto no <strong>capital de giro e na sua estratégia de precificação</strong>.</p></div><div class="p-panel" id="p-operacao" role="tabpanel"><p class="lead">Redesenhamos seus processos para garantir <strong>conformidade fiscal</strong> total, implementando mais <strong>governança e a automação</strong> de rotinas manuais.</p></div><div class="p-panel" id="p-tecnologia" role="tabpanel"><p class="lead">Integramos seus sistemas e aplicamos o <strong>uso de IA para um monitoramento em tempo real</strong>, transformando dados em inteligência fiscal acionável.</p></div><div class="p-panel" id="p-pessoas" role="tabpanel"><p class="lead">Preparamos sua <strong>liderança</strong> e realizamos a <strong>capacitação das equipes para a transição</strong>, garantindo o engajamento de todos para uma adaptação suave e eficiente.</p></div></div><div class="pilar-cta"><a href="#agenda" data-nav="agenda" class="btn primary">Solicitar Diagnóstico de Impacto</a></div></div></div></section>
+        </div>
+    </div>
+    
+    <div class="page" id="triade" data-page>
+      <div class="container">
+        <section class="section" style="padding-top: 2rem;"><h1 class="h1">Menos operação, Mais estratégia.</h1><p class="lead">Operação, Financeiro e Contabilidade em um único fluxo de inteligência.<br>Chega de retrabalho e dados quebrados. A Tríade Gestão 360 conecta seu ERP (operação), o BPO Financeiro e a Contabilidade Gerencial para transformar cada venda em conciliação, DRE e decisão — sem planilhas, sem fricção.</p><div class="cta"><a href="#agenda" data-nav="agenda" class="btn accent">Quero implementar a Tríade</a></div></section>
+        <section class="section"><h2 class="h2">O problema (e por que isso trava seu crescimento)</h2><div class="card"><h3>Seus sistemas conversam entre si ou você é o tradutor?</h3><p class="lead">Vendas no ERP, extratos no banco, pagamentos em planilhas… você vira o “operador de dados” que tenta juntar peças soltas. Resultado: retrabalho, divergências e decisões lentas baseadas em informação desatualizada.</p></div></section>
+        <section class="section" id="solucao-triade"><h2 class="h2">A solução: A Conexão que Liberta (A Tríade)</h2><p class="lead">Em vez de traduzir dados, criamos um ecossistema único em que Operação, Financeiro e Contabilidade fluem no mesmo ciclo de inteligência.</p><div class="cards-3"><div class="card"><h4>ERP de Vendas Segmentado (comando central)</h4><p class="lead">Cada venda/serviço/estoque é lançado uma única vez (PDV, agenda online, delivery). O ERP certo para Comércio & Serviços, Clínicas, Salões, Pet & Hotel, Food/Restaurantes.</p></div><div class="card"><h4>BPO Financeiro Automatizado (piloto automático)</h4><p class="lead">O ERP alimenta o Financeiro. Contas a pagar/receber, conciliação bancária e fluxo de caixa projetado rodam com governança (aprovação executiva e comprovantes clicáveis).</p></div><div class="card"><h4>Contabilidade Gerencial (leitura executiva)</h4><p class="lead">Dados já validados chegam à Contabilidade com lastro. Saem DRE, orçado × realizado, centros de custo e planejamento tributário — contabilidade como ferramenta de crescimento.</p></div></div></section>
+        <section class="section"><div class="card"><h2 class="h2">Receba a análise, não os dados</h2><p class="lead">Em vez de você nos enviar informação, <strong>nós lhe entregamos a análise pronta</strong>. A Tríade cruza ERP + BPO + Contabilidade para responder rápido:</p><ul class="lead" style="padding-left: 1.2em; margin-top: 1.5rem; list-style-type: '✓  ';"><li><strong>CAC, LTV e margem por cliente/produto</strong> — receita vs. custos e despesas.</li><li><strong>Quem e o quê geram mais caixa</strong> — vendedor, serviço ou linha com maior contribuição.</li><li><strong>Quando investir com segurança</strong> — fluxo projetado, cenários e tetos de gasto.</li><li><strong>Onde está o "ralo"</strong> — despesas e impostos que seguram a margem.</li></ul><div class="placeholder mock card-spacing"></div></div></section>
+        <section class="section"><h2 class="h2">Uma Tríade pensada para o seu segmento</h2><div class="cards-5"><div class="card"><strong>Comércio & Serviços</strong><p class="lead" style="font-size:14px;">Estoque, comissões, rentabilidade por serviço/unidade.</p><a href="/triade/comercio" class="lead" style="font-weight: 600;">→ Saiba mais</a></div><div class="card"><strong>Clínicas</strong><p class="lead" style="font-size:14px;">Agenda → faturamento → resultado por profissional.</p><a href="/triade/clinicas" class="lead" style="font-weight: 600;">→ Saiba mais</a></div><div class="card"><strong>Salões & Estéticas</strong><p class="lead" style="font-size:14px;">Comandas, agenda e comissionamento conectados.</p><a href="/triade/saloes" class="lead" style="font-weight: 600;">→ Saiba mais</a></div><div class="card"><strong>Petshops & Hotéis</strong><p class="lead" style="font-size:14px;">Banho/tosa, ocupação e lucratividade por serviço.</p><a href="/triade/pet" class="lead" style="font-weight: 600;">→ Saiba mais</a></div><div class="card"><strong>Food/Restaurantes</strong><p class="lead" style="font-size:14px;">Delivery, salão e CMV com previsibilidade.</p><a href="/triade/food" class="lead" style="font-weight: 600;">→ Saiba mais</a></div></div></section>
+        <section class="section"><h2 class="h2">Eles conquistaram o controle (e você também pode)</h2><div class="cards-3"><div class="card testimonial-card"><p class="lead">“Parou o pinga-pinga de planilhas. As comandas e o delivery entram no ERP e batem no caixa em minutos. Hoje fecho a semana rápido e enxergo quem dá mais margem.”</p><footer>— João Silva, Sabor Mineiro (BH), Food/Restaurante</footer></div><div class="card testimonial-card"><p class="lead">“Agenda lotada sem caos. Consultas entram no ERP e o financeiro concilia sozinho. Passei a ver resultado por profissional e planejo impostos sem susto.”</p><footer>— Dra. Maria Oliveira, Clínica Bem-Estar (SP), Clínicas</footer></div><div class="card testimonial-card"><p class="lead">“Comando central de estoque + comissões. Banho/tosa e hotel com ocupação na mão e CMV previsível.”</p><footer>— Ana Paula Nunes, Pet Hotel Bicho Feliz (RJ), Petshop & Hotel</footer></div></div></section>
+        <section class="section">
+            <div class="card">
+                <h2 class="h2">Fim do retrabalho. Começo da inteligência.</h2>
+                <p class="lead">A Tríade Gestão 360 integra seus dados para que você tome decisões mais rápidas e seguras. Chega de planilhas, chega de fricção.</p>
+                <div class="cta">
+                    <a href="#agenda" data-nav="agenda" class="btn accent">Quero o Controle Total da Tríade</a>
+                </div>
+            </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="page" id="produtos" data-page>
+        <div class="prod-container">
+            <section aria-labelledby="prod-hero-title" class="hero"><h2 id="prod-hero-title">Plataforma e Soluções para cada momento do seu crescimento.</h2><p class="lead">Do <strong>aprendizado</strong> à <strong>execução</strong>: explore nosso catálogo completo de soluções, todas integradas ao ecossistema <strong>Gestão 360</strong>.</p><div style="margin-bottom: 1rem;"><span class="pill">Catálogo de Soluções</span></div><div class="cta"><a href="#sec-treinamentos" class="btn primary product-chip" data-target="treinamentos">Treinamentos</a><a href="#sec-relatorios" class="btn product-chip" data-target="relatorios">Relatórios</a><a href="#sec-infoprodutos" class="btn product-chip" data-target="infoprodutos">Infoprodutos</a><a href="#sec-frameworks" class="btn product-chip" data-target="frameworks">Frameworks</a><a href="#sec-ferramentas" class="btn product-chip" data-target="ferramentas">Ferramentas</a><a href="#sec-integracoes" class="btn product-chip" data-target="integracoes">Integrações</a><a href="#sec-consultorias" class="btn product-chip" data-target="consultorias">Consultorias</a></div></section><section class="card finder-card" aria-labelledby="prod-finder-title"><div class="row"><h3 id="prod-finder-title">Encontre a solução ideal</h3><div class="row"><label class="lead" for="prod-need">Sua necessidade:</label><select id="prod-need" class="input" aria-label="Selecione sua necessidade"><option value="">Selecione seu objetivo...</option><option value="treinamentos">Capacitar meu time</option><option value="relatorios">Ter relatórios para o conselho</option><option value="infoprodutos">Aumentar a previsibilidade do caixa</option><option value="frameworks">Aprender um método de gestão</option><option value="ferramentas">Melhorar a gestão com planilhas</option><option value="integracoes">Conectar meus sistemas</option><option value="consultorias">Ter um especialista para me guiar</option></select><button id="prod-btn-find" class="btn">Encontrar</button></div></div><small class="muted">Sugerimos uma categoria aderente ao seu momento.</small></section><div id="product-sections"><section id="sec-treinamentos" class="card-list section-anchor" aria-labelledby="h-trein"><h3 id="h-trein">Treinamentos</h3><p class="lead">Formações e cursos práticos para transformar a gestão — do dono ao time.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>Formação: Financeiro para Donos</h4><p class="lead">Fluxo de caixa, orçado × realizado e rituais em 6 semanas.</p><div><span class="pill">Online</span><span class="pill">Para donos</span></div><ul class="bullets lead" style="padding-left: 1.2em;"><li>+6 encontros ao vivo</li><li>Templates e trilhas</li></ul><div class="cta"><a class="btn primary">Ver detalhes</a></div></article></div></section><section id="sec-relatorios" class="card-list section-anchor" aria-labelledby="h-rel" style="display:none;"><h3 id="h-rel">Relatórios Personalizados</h3><p class="lead">Relatórios e painéis sob medida, prontos para decidir.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>DRE por Centro de Custo</h4><p class="lead">Visão clara da lucratividade por unidade de negócio ou filial.</p><div><span class="pill">Power BI</span><span class="pill">Sob medida</span></div><div class="cta"><a class="btn primary">Solicitar orçamento</a></div></article></div></section><section id="sec-infoprodutos" class="card-list section-anchor" aria-labelledby="h-info" style="display:none;"><h3 id="h-info">Infoprodutos</h3><p class="lead">Playbooks, templates e planilhas para aplicar hoje — sem dependência de terceiros.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>Kit de Planilhas Essenciais</h4><p class="lead">Fluxo de Caixa, DRE Simplificada e Controle de Contratos.</p><div><span class="pill">Google Sheets</span><span class="pill">Download imediato</span></div><div class="cta"><a class="btn primary">Adquirir por R$ 97</a></div></article></div></section><section id="sec-frameworks" class="card-list section-anchor" aria-labelledby="h-frame" style="display:none;"><h3 id="h-frame">Frameworks</h3><p class="lead">Metodologias e processos validados para organizar sua gestão.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>Tríade Operação-Financeiro-Contábil (Blueprint)</h4><p class="lead">Passo a passo para ligar ERP, BPO Financeiro e Contabilidade e transformar cada venda em conciliação, DRE e decisão.</p><div><span class="pill">PDF + Notion</span><span class="pill">Plug-and-play</span><span class="pill">Implantação: 7 dias</span><span class="pill">PMEs & Startups</span></div><div class="cta"><a class="btn primary">Baixar framework</a></div></article><article class="card"><div class="media"></div><h4>Ritual de Gestão Semanal (OGSM + Orçado × Realizado)</h4><p class="lead">Agenda de rituais, pauta e indicadores para reuniões de 30–45 min com foco em caixa, margem e plano de ação.</p><div><span class="pill">Template de pauta</span><span class="pill">KPIs prontos</span><span class="pill">Nível: Intermediário</span><span class="pill">Time: 1h/semana</span></div><div class="cta"><a class="btn primary">Ver detalhes</a></div></article><article class="card"><div class="media"></div><h4>Framework de Precificação & Margem por Serviço</h4><p class="lead">Modelo para calcular mark-up, margem de contribuição e ponto de equilíbrio por cliente/serviço.</p><div><span class="pill">SaaS/Serviços</span><span class="pill">Inclui exemplos</span><span class="pill">Pronto p/ auditoria</span><span class="pill">Atualizado 2025</span></div><div class="cta"><a class="btn primary">Usar modelo</a></div></article></div></section><section id="sec-ferramentas" class="card-list section-anchor" aria-labelledby="h-ferram" style="display:none;"><h3 id="h-ferram">Ferramentas</h3><p class="lead">Soluções práticas e planilhas para otimizar sua rotina.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>Planilha de Variáveis e Indicadores</h4><p class="lead">Entrada rápida por centro de custo, projeções automáticas e alertas de déficit.</p><div><span class="pill">XLSX</span><span class="pill">Cores de status</span><span class="pill">Exporta CSV</span><span class="pill">Tutorial incluso</span></div><div class="cta"><a class="btn primary">Abrir planilha</a></div></article><article class="card"><div class="media"></div><h4>Calculadora de Ponto de Equilíbrio Multi-Serviços</h4><p class="lead">Calcula break-even por linha de receita, simula cenários e mostra sensibilidade de preço/volume.</p><div><span class="pill">Simulações</span><span class="pill">Gráficos</span><span class="pill">What-if 3 cenários</span><span class="pill">Compartilhável</span></div><div class="cta"><a class="btn primary">Baixar template</a></div></article><article class="card"><div class="media"></div><h4>Dashboard DRE/DRF Gerencial (Sheets + Data Studio)</h4><p class="lead">Conector para transformar dados do financeiro em DRE/DRF visual com filtros por período e cliente.</p><div><span class="pill">Google Sheets</span><span class="pill">Looker Studio</span><span class="pill">Atualização 1-clique</span><span class="pill">Multiempresa</span></div><div class="cta"><a class="btn primary">Ver demo</a></div></article></div></section><section id="sec-integracoes" class="card-list section-anchor" aria-labelledby="h-integ" style="display:none;"><h3 id="h-integ">Integrações</h3><p class="lead">Conecte a Gestão 360 com as ferramentas que você já usa.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>ASAAS ↔ Gestão 360 (Cobrança & Recorrência)</h4><p class="lead">Sincroniza faturas/boletos, baixa automática e reconciliação no fluxo de caixa.</p><div><span class="pill">Cobrança</span><span class="pill">Recorrente</span><span class="pill">Setup: 2h</span><span class="pill">Suporte incluso</span></div><div class="cta"><a class="btn primary">Solicitar integração</a></div></article><article class="card"><div class="media"></div><h4>ERP (Omie/ContaAzul) ↔ BPO Financeiro</h4><p class="lead">Espelha pedidos/Notas Fiscais no contas a receber/pagar e alimenta a contabilidade.</p><div><span class="pill">NF-e/NFS-e</span><span class="pill">Orçado × Realizado</span><span class="pill">Sem planilhas</span><span class="pill">Segurança LGPD</span></div><div class="cta"><a class="btn primary">Ver compatibilidade</a></div></article><article class="card"><div class="media"></div><h4>Conciliação Bancária via Open Finance</h4><p class="lead">Importa extratos de bancos e carteiras (Pix/cartões) e classifica por regras inteligentes.</p><div><span class="pill">Open Finance</span><span class="pill">Multicontas</span><span class="pill">Regras automáticas</span><span class="pill">Implantação: 48h</span></div><div class="cta"><a class="btn primary">Agendar setup</a></div></article></div></section><section id="sec-consultorias" class="card-list section-anchor" aria-labelledby="h-consult" style="display:none;"><h3 id="h-consult">Consultorias</h3><p class="lead">Tenha um especialista dedicado para analisar e guiar suas decisões.</p><div class="grid-3"><article class="card"><div class="media"></div><h4>Sprint de Onboarding Financeiro (30 dias)</h4><p class="lead">Organização do contas a pagar/receber, políticas, plano de contas e DRE gerencial rodando.</p><div><span class="pill">Kickoff 90 min</span><span class="pill">Entrega em 4 semanas</span><span class="pill">Playbooks</span><span class="pill">Time dedicado</span></div><div class="cta"><a class="btn primary">Agendar diagnóstico</a></div></article><article class="card"><div class="media"></div><h4>Diagnóstico Tributário para Serviços (Combo Isento)</h4><p class="lead">Mapeamento de oportunidades legais, modelagem de combos com item isento e estimativa de economia.</p><div><span class="pill">Lucro Presumido/Real</span><span class="pill">Relatório técnico</span><span class="pill">ROI estimado</span><span class="pill">Sigilo</span></div><div class="cta"><a class="btn primary">Falar com especialista</a></div></article><article class="card"><div class="media"></div><h4>FP&A & Controladoria Starter (90 dias)</h4><p class="lead">Orçamento anual, forecast mensal, rituais de performance e cenários (otimista/realista/pessimista).</p><div><span class="pill">OGSM/KPIs</span><span class="pill">Cenários</span><span class="pill">Board-ready</span><span class="pill">Treinamento do time</span></div><div class="cta"><a class="btn primary">Solicitar proposta</a></div></article></div></section>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="faq" data-page>
+        <div class="container section">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto;"><h1 class="h1">Perguntas Frequentes (e Respostas Estratégicas)</h1><p class="lead">Sabemos que a decisão de transformar a gestão financeira é importante. Por isso, reunimos não apenas as dúvidas mais comuns, mas as respostas que mostram como pensamos e por que a Gestão 360 é o parceiro certo para o crescimento da sua empresa.</p></div>
+            <section class="section"><h2 class="h2" style="text-align: center;">O Custo Oculto de Fazer Sozinho vs. o Retorno com a Gestão 360</h2><div class="cards-2"><div class="card"><h4>O Custo Interno</h4><p class="lead">Um analista financeiro interno pode custar mais de R$ 7.000/mês, considerando salário, encargos, benefícios e turnover. Some a isso o custo de softwares, a falta de especialização em planejamento tributário e as horas que você, gestor, ainda gasta em tarefas operacionais.</p></div><div class="card"><h4>O Investimento Estratégico</h4><p class="lead">Nosso serviço é um investimento com retorno claro. Reduzimos seus custos fixos, otimizamos sua carga tributária (uma economia que muitas vezes paga o serviço), liberamos seu tempo para focar em vendas e entregamos a inteligência para decisões que aumentam seu lucro.</p><div class="cta"><a href="#roi" class="btn primary" data-nav="roi">Calcular meu ROI em 3 minutos</a></div></div></div></section>
+            <section class="section"><h2 class="h2" style="text-align: center;">Nossa Garantia: Migração sem dor, suporte que não te abandona.</h2><div class="cards-3"><div class="card">✅ <strong>Implementação guiada por etapa:</strong><p class="lead">Nosso time de onboarding conduz todo o processo, desde o mapeamento de dados até o treinamento da sua equipe, com um cronograma claro e go-live assistido.</p></div><div class="card">✅ <strong>Suporte humanizado por segmento:</strong><p class="lead">Você terá acesso a especialistas que entendem as particularidades do seu mercado, seja varejo, serviços ou saúde. Falamos a sua língua.</p></div><div class="card">✅ <strong>Planos que crescem com seu negócio:</strong><p class="lead">Nossa solução é modular. Comece com o essencial e adicione camadas de serviço conforme sua empresa escala, sem traumas ou reestruturações.</p></div></div></section>
+            <section class="section"><h2 class="h2" style="text-align: center;">A Combinação que Gera Resultados: Tecnologia e Especialistas Dedicados</h2><div class="card"><p class="lead">A tecnologia organiza, mas são as pessoas que geram inteligência. Na Gestão 360, você não contrata apenas um software. Você ganha acesso a uma equipe multidisciplinar – analistas financeiros, contadores e especialistas em planejamento – que usa a tecnologia para interpretar seus números e lhe entregar um plano de ação claro. É a diferença entre ter dados e ter direção.</p></div></section>
+            <div class="cards-2"><details><summary>O serviço é caro?</summary><p class="lead" style="margin-top: 8px;">Vemos nosso serviço como um investimento, não um custo. O valor é modular e, na maioria dos casos, inferior ao custo de um funcionário CLT, sem os encargos e o turnover. O retorno vem na forma de economia de tempo, redução de custos e decisões mais inteligentes que impulsionam o lucro.</p></details><details><summary>Preciso pagar pela implantação (setup)?</summary><p class="lead" style="margin-top: 8px;">Sim, o setup é um investimento inicial que garante o sucesso da parceria. Nessa fase, nossa equipe dedica horas para mapear seus processos, configurar seu plano de contas e treinar sua equipe. É a base que garante a organização e os resultados futuros. Oferecemos opções flexíveis de pagamento para facilitar sua entrada.</p></details><details><summary>Por que o contrato tem fidelidade de 12 meses?</summary><p class="lead" style="margin-top: 8px;">Encaramos os 12 meses como o tempo mínimo para que você colha os frutos de uma gestão financeira profissional. Nos primeiros 3 meses você já sente a organização, mas o real retorno sobre o investimento (ROI) se consolida entre 6 e 12 meses, com dados consistentes para análises estratégicas.</p></details><details><summary>Tenho receio de terceirizar o financeiro. É seguro?</summary><p class="lead" style="margin-top: 8px;">Totalmente. A segurança é nossa prioridade. Nunca movimentamos seu dinheiro. Nosso time apenas organiza os pagamentos, e a aprovação final é sempre sua, via token do seu banco. Além disso, temos contratos de confidencialidade e 27 anos de mercado que validam nossa credibilidade.</p></details><details><summary>Já tive uma má experiência com BPO. Qual a diferença de vocês?</summary><p class="lead" style="margin-top: 8px;">Entendemos sua preocupação. Nosso diferencial é a combinação de uma plataforma de tecnologia própria com uma equipe multidisciplinar. Não somos apenas um sistema ou "digitadores". Temos analistas que interpretam seus números e fornecem insights, agindo de forma proativa para garantir a precisão e o valor da informação.</p></details><details><summary>Meu financeiro é muito desorganizado. Vocês conseguem arrumar?</summary><p class="lead" style="margin-top: 8px;">Sim, essa é a nossa especialidade. A maioria dos nossos clientes chega com o financeiro em planilhas. Nosso serviço é focado em transformar essa desorganização em clareza, com dashboards e relatórios onde cada número é 100% rastreável até o comprovante.</p></details><details><summary>Tenho vários CNPJs. A plataforma dá conta?</summary><p class="lead" style="margin-top: 8px;">Sim. Nossa plataforma é multi-CNPJ e foi desenhada para isso. Você terá tanto a visão consolidada do seu grupo quanto a análise individual por empresa, centro de custo ou unidade, permitindo decisões estratégicas para cada frente do seu negócio.</p></details><details><summary>O serviço é só uma plataforma ou tem uma equipe por trás?</summary><p class="lead" style="margin-top: 8px;">É a combinação dos dois, e esse é o nosso maior valor. A tecnologia sozinha não resolve. Você terá acesso à plataforma G360 Finanças e a um time de especialistas (operacional, gerencial e de relacionamento) que funciona como uma extensão da sua própria equipe.</p></details><details><summary>Não quero trocar de contador agora. Posso contratar só o BPO?</summary><p class="lead" style="margin-top: 8px;">Sim, perfeitamente. Nossos serviços são modulares. O BPO Financeiro organiza sua gestão diária e podemos, inclusive, conceder acesso ao seu contador atual, facilitando o trabalho dele. Nosso objetivo é complementar e melhorar seus processos, não necessariamente substituir seus parceiros.</p></details></div>
+        </div>
+    </div>
+    <div class="page" id="roi" data-page>
+        <div class="container section">
+            <div id="roi-calculator-container" class="card" style="max-width: 800px; margin: 0 auto;">
+                <div id="screen1-roi" class="screen active"><div style="text-align: center; margin-bottom: 1.5rem;"><h1 class="h1">Sua gestão financeira atual é um custo ou um investimento?</h1><p class="lead">Descubra em 3 minutos o potencial de economia e o retorno que a Gestão 360 pode gerar para o seu negócio.</p></div><p style="text-align: center; font-weight: 500; margin-bottom: 1rem;">Preencha os campos abaixo para uma simulação personalizada.</p><div class="form-row" style="grid-template-columns: 1fr;"><input type="text" id="nome-roi" placeholder="Nome"><input type="text" id="cnpj-roi" placeholder="CNPJ" maxlength="18"><input type="text" id="whatsapp-roi" placeholder="WhatsApp"><select id="regimeTributario-roi"><option value="" disabled selected>Selecione seu regime tributário</option><option value="simples">Simples Nacional</option><option value="presumido">Lucro Presumido</option><option value="real">Lucro Real</option></select></div><div class="cta" style="margin-top: 1.5rem;"><button id="btnScreen1-roi" class="btn primary" style="width: 100%; justify-content: center;"><span class="btn-text">Avançar</span><div class="spinner" style="display: none; margin-left: 8px;"></div></button></div><p id="formMessage1-roi" class="lead" style="font-size: 13px; text-align: center; margin-top: 1rem; height: 16px;"></p></div>
+                <div id="screen2-roi" class="screen"><div style="text-align: center; margin-bottom: 1.5rem;"><h2 class="h2">Dados gerais da sua empresa</h2></div><div class="form-row" style="grid-template-columns: 1fr;"><input type="number" id="faturamento-roi" placeholder="Faturamento mensal (R$)"><input type="number" id="salarios-roi" placeholder="Soma dos salários do financeiro (R$)"><input type="number" id="custoSoftware-roi" placeholder="Custo mensal com softwares (R$)"><input type="number" id="proLabore-roi" placeholder="Seu pró-labore atual (R$)"><input type="number" id="horasGestor-roi" placeholder="Quantas horas/dia gastas em tarefas operacionais"></div><div class="cta" style="margin-top: 1.5rem;"><button id="btnScreen2-roi" class="btn primary" style="width: 100%; justify-content: center;"><span class="btn-text">Ver Resultados</span><div class="spinner" style="display: none; margin-left: 8px;"></div></button></div><p id="formMessage2-roi" class="lead" style="font-size: 13px; text-align: center; margin-top: 1rem; height: 16px; color: #ef4444;"></p></div>
+                <div id="screen3-roi" class="screen" style="text-align: center;"><h2 class="h2">Análise do Cenário Atual</h2><p class="lead">Esta é a memória de cálculo do seu custo financeiro interno.</p><div class="cards-3 card-spacing"><div class="card"><h4 class="h2" style="font-size: 16px;">1. Custo com Pessoal</h4><p id="custoPessoal-roi" class="h1" style="font-size: 24px; color: #ef4444;"></p></div><div class="card"><h4 class="h2" style="font-size: 16px;">2. Custo com Ferramentas</h4><p id="custoFerramentas-roi" class="h1" style="font-size: 24px; color: #ef4444;"></p></div><div class="card"><h4 class="h2" style="font-size: 16px;">3. Custo do Seu Tempo</h4><p id="custoTempoGestor-roi" class="h1" style="font-size: 24px; color: #ef4444;"></p></div></div><h2 class="h2 card-spacing">Comparativo de Cenários</h2><div class="cards-2"><div class="card"><p class="h2" style="font-size:18px;">Custo Atual Total</p><p id="cenarioAtual-roi" class="h1" style="color: #dc2626;"></p></div><div class="card"><p class="h2" style="font-size:18px;">Cenário com Gestão 360º</p><p id="cenarioG360-roi" class="h2" style="color: var(--accent);"></p></div></div><div class="card card-spacing" style="background-color: var(--brand); color: #fff;"><p class="lead" style="color: rgba(255,255,255,0.8);">Economia Mensal Estimada</p><p id="economiaTotal-roi" class="h1" style="font-size: 36px;"></p></div><p class="lead card-spacing">Este é o valor que sua empresa pode reinvestir em crescimento, inovação e estratégia.</p>
+                <div class="section"><h2 class="h2" style="text-align: center;">Além da Economia: Veja os Problemas que a Gestão 360 Elimina da sua Rotina</h2><div class="cards-4 card-spacing"><div class="card"><div class="placeholder" style="height: 140px; margin-bottom: 1rem;"></div><h4>Gestão Centralizada</h4><p class="lead">Diga adeus à desorganização. Centralizamos as informações de múltiplos CNPJs e centros de custo, dando a você uma visão clara e unificada do seu negócio.</p></div><div class="card"><div class="placeholder" style="height: 140px; margin-bottom: 1rem;"></div><h4>Controle e Rastreabilidade</h4><p class="lead">Chega de "furos" no caixa. Garantimos a conciliação precisa de cada pagamento e recebimento, com comprovantes anexados para uma auditoria simples e rápida.</p></div><div class="card"><div class="placeholder" style="height: 140px; margin-bottom: 1rem;"></div><h4>Decisões Baseadas em Dados</h4><p class="lead">Transformamos seus números em relatórios gerenciais que você entende. Analise a lucratividade real e tome decisões estratégicas com base em dados, não em achismos.</p></div><div class="card"><div class="placeholder" style="height: 140px; margin-bottom: 1rem;"></div><h4>Tempo para o que Importa</h4><p class="lead">Liberamos você e sua equipe das tarefas operacionais que consomem horas. Ganhe tempo para focar em estratégia, vendas e no crescimento do seu negócio.</p></div></div></div>
+                <div class="section"><div class="cards-2"><div class="card"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><h4>Financeiro Organizado, Crescimento Acelerado</h4><p class="lead">Com a base financeira sólida, sua empresa ganha agilidade para aproveitar oportunidades e escalar de forma sustentável.</p></div><div class="card"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><h4>De Gestor Operacional a CEO Estratégico</h4><p class="lead">Deixe de ser o "apagador de incêndios" do financeiro e assuma seu verdadeiro papel: o de líder que guia a empresa para o próximo nível.</p></div></div></div>
+                <div class="cta" style="justify-content:center;"><a href="#agenda" data-nav="agenda" class="btn primary" style="background-color: var(--accent); border-color: var(--accent);">Agendar reunião</a></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="agenda" data-page><div class="container section"><h2 class="h2">Agendar apresentação (Conteúdo a ser adicionado)</h2></div></div>
+    <div class="page" id="blog" data-page>
+        <div class="container section">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 2.5rem auto;"><h1 class="h1">Gestão, conhecimento & insights para Gestores de negócios</h1><p class="lead">Seu negócio não pode mais ser gerido com base em achismos. Neste canal, você, empresário e/ou Gestor de negócios, encontra mais do que dicas: entregamos análises, dados e estratégias financeiras e contábeis validadas no campo de batalha. Nosso objetivo é um só: traduzir a complexidade do mercado em decisões lucrativas e seguras para o seu dia a dia. Chega de incertezas. É hora de crescer com inteligência!</p></div>
+            <div id="blog-filters"><button class="btn primary blog-filter-btn" data-filter="all">Todos</button><button class="btn ghost blog-filter-btn" data-filter="financas">Finanças & Fluxo de Caixa</button><button class="btn ghost blog-filter-btn" data-filter="contabilidade">Contabilidade & Impostos</button><button class="btn ghost blog-filter-btn" data-filter="gestao">Gestão & Estratégia</button></div>
+            <div class="cards-3" id="blog-grid"><article class="card blog-article-card" data-category="financas"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Como Parar o Sangramento: 5 Estratégias para Controlar o Fluxo de Caixa</h4><p class="lead" style="font-size: 14px;">O medo de que o dinheiro "vaze" e a empresa fique sem operar. A palavra "sangramento" é forte e gera identificação imediata.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="financas"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Emprestar do Banco ou Buscar um Investidor? Um Guia Decisivo</h4><p class="lead" style="font-size: 14px;">A dúvida crucial sobre a melhor forma de capitalizar a empresa sem perder o controle ou pagar juros absurdos.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="financas"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Além da Planilha: Como a Automação Financeira Pode Salvar 10 Horas da Sua Semana</h4><p class="lead" style="font-size: 14px;">A perda de tempo com tarefas manuais e o risco de erro humano que custa dinheiro. Oferece uma solução moderna.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="contabilidade"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Reforma Tributária: O que Muda na Prática para sua Empresa</h4><p class="lead" style="font-size: 14px;">Um tema de altíssima relevância que gera muitas dúvidas. A especificidade "Serviços/Comércio" aumenta a conexão.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="contabilidade"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Planejamento Tributário para PMEs: 3 Estratégias Legais para Reduzir Impostos</h4><p class="lead" style="font-size: 14px;">Oferece um benefício claro e desejado: pagar menos impostos de forma legal para aumentar a lucratividade.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="contabilidade"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Gestão de Folha de Pagamento: Como Otimizar Custos e Blindar sua Empresa</h4><p class="lead" style="font-size: 14px;">Aborda uma área crítica que combina otimização financeira com segurança jurídica, duas grandes preocupações de qualquer gestor.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="gestao"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>Precificação que Gera Lucro: O Método de 4 Passos</h4><p class="lead" style="font-size: 14px;">Resolve uma das maiores dores de qualquer empreendedor: "Será que estou cobrando o valor certo?".</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="gestao"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>De Operador a Estrategista: Como Parar de "Apagar Incêndios"</h4><p class="lead" style="font-size: 14px;">Conecta-se com a jornada do dono de PME que se sente sobrecarregado com a operação diária.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article><article class="card blog-article-card" data-category="gestao"><div class="placeholder" style="height: 160px; margin-bottom: 1rem;"></div><div class="card-content"><h4>KPIs que Importam: As 5 Métricas que Todo Dono de PME Precisa Monitorar</h4><p class="lead" style="font-size: 14px;">Resolve a sobrecarga de informação e a dificuldade de saber no que realmente prestar atenção.</p><div class="cta"><a href="#" class="btn">Ler artigo completo →</a></div></div></article></div>
+        </div>
+    </div>
+  </main>
+
+  <footer class="container footer"><div class="row" style="justify-content:space-between; align-items:center;"><div>© Gestão 360º — Todos os direitos reservados</div><div class="row"><a href="#" class="muted">Política de Privacidade</a><a href="#" class="muted">Termos de Uso</a></div></div></footer>
+
+  <script>
+    // ===== Navegação SPA com âncoras (#hash) =====
+    (function(){
+      const pages=document.querySelectorAll('[data-page]');
+      const navLinks=document.querySelectorAll('.nav [data-nav]');
+      function show(pageId){
+        pages.forEach(p=>p.classList.toggle('active',p.id===pageId));
+        navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('data-nav')===pageId));
+        if(pageId!=='produtos'){window.scrollTo({top:0,behavior:'smooth'})}
+      }
+      function getIdFromHash(){const h=location.hash.replace('#','');return h&&document.getElementById(h)?h:'home'}
+      navLinks.forEach(a=>{a.addEventListener('click',(e)=>{ e.preventDefault(); window.location.hash=a.getAttribute('data-nav')})});
+      window.addEventListener('hashchange',()=>show(getIdFromHash()));
+      document.addEventListener('DOMContentLoaded',()=>show(getIdFromHash()));
+    })();
+    // ===== Tabs internas (Dores) =====
+    (function(){
+      const homePage=document.getElementById('home');
+      if(!homePage)return;
+      const tabBtns=[...homePage.querySelectorAll('.tab-btn')];
+      const tabPanels=[...homePage.querySelectorAll('.tab-panel')];
+      tabBtns.forEach(btn=>{btn.addEventListener('click',()=>{const id=btn.getAttribute('data-tab');tabBtns.forEach(b=>b.classList.toggle('active',b===btn));tabPanels.forEach(p=>p.classList.toggle('active',p.id===id))})});
+    })();
+    // ===== Lógica da Aba de Produtos =====
+    (function(){
+        const root = document.getElementById('produtos');
+        if (!root) { return; }
+        const chips = root.querySelectorAll('.product-chip');
+        const sections = root.querySelectorAll('#product-sections .card-list');
+        const needSel = root.querySelector('#prod-need');
+        const findBtn = root.querySelector('#prod-btn-find');
+        function showSection(targetId) {
+            if (!targetId) return;
+            sections.forEach(sec => { sec.style.display = 'none'; });
+            const targetSection = root.querySelector('#sec-' + targetId);
+            if (targetSection) { targetSection.style.display = 'block'; }
+            chips.forEach(chip => { chip.classList.toggle('primary', chip.getAttribute('data-target') === targetId); });
+            if (targetSection) { targetSection.scrollIntoView({ behavior:'smooth', block:'start' });}
+        }
+        chips.forEach(chip => { chip.addEventListener('click', (e) => { e.preventDefault(); const target = chip.getAttribute('data-target'); showSection(target); }); });
+        if(findBtn && needSel){ findBtn.addEventListener('click', () => { const target = needSel.value; showSection(target || 'treinamentos'); }); }
+        showSection('treinamentos');
+    })();
+    // ===== Lógica do Sistema de Abas (BPO Financeiro) =====
+    (function(){
+      const bpoSection=document.getElementById('bpo');
+      if(!bpoSection)return;
+      const tabContainer=bpoSection.querySelector('#bpo-ftabs');
+      if(!tabContainer)return;
+      const tabs=tabContainer.querySelectorAll('[role="tab"]');
+      const panels=tabContainer.querySelectorAll('[role="tabpanel"]');
+      tabs.forEach(tab=>{tab.addEventListener('click',(e)=>{e.preventDefault();const targetPanelId=tab.getAttribute('data-fpanel');tabs.forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});panels.forEach(p=>{p.classList.remove('active')});tab.classList.add('active');tab.setAttribute('aria-selected','true');const targetPanel=tabContainer.querySelector(`#${targetPanelId}`);if(targetPanel){targetPanel.classList.add('active')}})})
+    })();
+    // ===== Lógica da Calculadora Tributária G360 =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const calculatorContainer = document.getElementById('ot-widget'); 
+        if (!calculatorContainer) { return; }
+        const form = document.getElementById('tax-form');
+        const steps = Array.from(calculatorContainer.querySelectorAll('.ot-step'));
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultsContainer = document.getElementById('results-container');
+        const header = calculatorContainer.querySelector('#header');
+        const faturamentoSlider = document.getElementById('faturamento');
+        const faturamentoValor = document.getElementById('faturamento-valor');
+        const finalCta = document.getElementById('cta-final');
+        const messageEl = document.getElementById('tax-form-message');
+        let currentStep = 0;
+        const totalSteps = steps.length;
+        const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+        const updateFormState = () => {
+            steps.forEach((step, index) => step.classList.toggle('active', index === currentStep));
+            const progress = ((currentStep + 1) / totalSteps) * 100;
+            progressBar.style.width = `${progress}%`;
+            prevBtn.disabled = currentStep === 0;
+            nextBtn.style.display = currentStep === totalSteps - 1 ? 'none' : 'inline-flex';
+            submitBtn.style.display = currentStep === totalSteps - 1 ? 'inline-flex' : 'none';
+        };
+        if(faturamentoSlider){
+            faturamentoSlider.addEventListener('input', () => { faturamentoValor.textContent = formatCurrency(faturamentoSlider.value); });
+            faturamentoValor.textContent = formatCurrency(faturamentoSlider.value);
+        }
+        const goToNextStep = () => { if (currentStep < totalSteps - 1) { currentStep++; updateFormState(); } };
+        if(nextBtn){
+            nextBtn.addEventListener('click', () => { 
+                if (currentStep === 1) { 
+                    const cnpj = document.getElementById('cnpj').value; 
+                    const whatsapp = document.getElementById('whatsapp').value; 
+                    if (!cnpj || !whatsapp) { 
+                        if(messageEl) messageEl.textContent = "Por favor, preencha o CNPJ e o WhatsApp para continuar.";
+                        return; 
+                    }
+                    if(messageEl) messageEl.textContent = '';
+                } 
+                goToNextStep(); 
+            });
+        }
+        if(prevBtn){
+            prevBtn.addEventListener('click', () => { if (currentStep > 0) { currentStep--; updateFormState(); } });
+        }
+        if(submitBtn){
+            submitBtn.addEventListener('click', () => { const leadData = collectLeadData(); if (leadData) { const diagnosis = performTaxAnalysis(leadData); prepareAndSendLead(leadData, diagnosis); displayPreview(diagnosis); } });
+        }
+        const collectLeadData = () => { const salarios = parseFloat(document.getElementById('salarios').value) || 0; const prolabore = parseFloat(document.getElementById('prolabore').value) || 0; return { regimeAtual: document.querySelector('input[name="regime_atual"]:checked').value, cnpj: document.getElementById('cnpj').value, whatsapp: document.getElementById('whatsapp').value, faturamentoMensal: parseFloat(document.getElementById('faturamento').value), atividade: document.querySelector('input[name="atividade"]:checked').value, salariosMensal: salarios, prolaboreMensal: prolabore, folhaMensal: salarios + prolabore, despesasMensal: parseFloat(document.getElementById('despesas').value) || 0, timestamp: new Date().toLocaleString('pt-BR') }; };
+        const performTaxAnalysis = (data) => { const faturamentoAnual = data.faturamentoMensal * 12; const folhaAnual = data.folhaMensal * 12; const despesasAnual = data.despesasMensal * 12; const simples = calcularSimplesNacional(faturamentoAnual, data.atividade, folhaAnual) / 12; const presumido = calcularLucroPresumido(faturamentoAnual, data.atividade) / 12; const real = calcularLucroReal(faturamentoAnual, despesasAnual) / 12; const resultados = [ { nome: 'Simples Nacional', valor: simples }, { nome: 'Lucro Presumido', valor: presumido }, { nome: 'Lucro Real', valor: real } ].filter(r => isFinite(r.valor)); if (resultados.length === 0) return { recomendado: "N/A", economia: 0 }; const minTax = Math.min(...resultados.map(r => r.valor)); const maxTax = Math.max(...resultados.map(r => r.valor)); const recomendado = resultados.find(r => r.valor === minTax); return { simples: isFinite(simples) ? simples : "Não aplicável", presumido: isFinite(presumido) ? presumido : "Não aplicável", real: isFinite(real) ? real : "Não aplicável", recomendado: recomendado.nome, economia: maxTax - minTax }; };
+        const prepareAndSendLead = (leadData, diagnosis) => { const emailTo = "comercial@g360.com.br"; const emailSubject = `Novo Lead da Calculadora - CNPJ: ${leadData.cnpj}`; const emailBody = `
+NOVO LEAD QUALIFICADO DA CALCULADORA TRIBUTÁRIA
+------------------------------------------------------
+Data: ${leadData.timestamp}
+DADOS DO LEAD:
+- CNPJ: ${leadData.cnpj}
+- WhatsApp: ${leadData.whatsapp}
+- Regime Tributário Atual: ${leadData.regimeAtual}
+DADOS PARA ANÁLISE:
+- Faturamento Mensal: ${formatCurrency(leadData.faturamentoMensal)}
+- Atividade Principal: ${leadData.atividade}
+- Salários + Encargos (Mês): ${formatCurrency(leadData.salariosMensal)}
+- Pró-labore (Mês): ${formatCurrency(leadData.prolaboreMensal)}
+- Despesas Operacionais (Mês): ${formatCurrency(leadData.despesasMensal)}
+------------------------------------------------------
+DIAGNÓSTICO PRELIMINAR (GERADO AUTOMATICAMENTE):
+- Custo Mensal no Simples Nacional: ${typeof diagnosis.simples === 'number' ? formatCurrency(diagnosis.simples) : diagnosis.simples}
+- Custo Mensal no Lucro Presumido: ${typeof diagnosis.presumido === 'number' ? formatCurrency(diagnosis.presumido) : diagnosis.presumido}
+- Custo Mensal no Lucro Real: ${typeof diagnosis.real === 'number' ? formatCurrency(diagnosis.real) : diagnosis.real}
+- REGIME RECOMENDADO: ${diagnosis.recomendado}
+- ECONOMIA POTENCIAL MENSAL: ${formatCurrency(diagnosis.economia)}
+------------------------------------------------------
+AÇÃO RECOMENDADA: Entrar em contato via WhatsApp para apresentar o diagnóstico completo.
+`.trim(); finalCta.href = `mailto:${emailTo}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`; };
+        const displayPreview = (diagnosis) => { form.style.display = 'none'; header.style.display = 'none'; resultsContainer.style.display = 'block'; document.getElementById('economia-valor').textContent = formatCurrency(diagnosis.economia); };
+        const calcularSimplesNacional = (faturamentoAnual, atividade, folhaAnual) => { const tabelas = { comercio: { faixas: [180000, 360000, 720000, 1800000, 3600000, 4800000], aliquotas: [0.04, 0.073, 0.095, 0.107, 0.143, 0.19] }, industria: { faixas: [180000, 360000, 720000, 1800000, 3600000, 4800000], aliquotas: [0.045, 0.078, 0.10, 0.112, 0.147, 0.30] }, servicos: { faixas: [180000, 360000, 720000, 1800000, 3600000, 4800000], aliquotas: [0.06, 0.112, 0.135, 0.16, 0.21, 0.33] }, servicos_profissionais: { faixas: [180000, 360000, 720000, 1800000, 3600000, 4800000], aliquotas: [0.155, 0.18, 0.195, 0.205, 0.23, 0.305] } }; let anexo = atividade; if (atividade === 'servicos_profissionais' && (folhaAnual / faturamentoAnual) >= 0.28) anexo = 'servicos'; const tabela = tabelas[anexo]; let aliquota = tabela.aliquotas[tabela.aliquotas.length - 1]; for (let i = 0; i < tabela.faixas.length; i++) if (faturamentoAnual <= tabela.faixas[i]) { aliquota = tabela.aliquotas[i]; break; } if (faturamentoAnual > 4800000) return Infinity; return faturamentoAnual * aliquota; };
+        const calcularLucroPresumido = (faturamentoAnual, atividade) => { const presuncao = (atividade === 'comercio' || atividade === 'industria') ? { irpj: 0.08, csll: 0.12 } : { irpj: 0.32, csll: 0.32 }; const irpj = (faturamentoAnual * presuncao.irpj) * 0.15; const csll = (faturamentoAnual * presuncao.csll) * 0.09; const pis = faturamentoAnual * 0.0065; const cofins = faturamentoAnual * 0.03; const impostoMunicipalEstadual = faturamentoAnual * (atividade.includes('servicos') ? 0.05 : 0.04); return irpj + csll + pis + cofins + impostoMunicipalEstadual; };
+        const calcularLucroReal = (faturamentoAnual, despesasAnuais) => { const lucro = faturamentoAnual - despesasAnuais; if (lucro <= 0) return Infinity; const pis = faturamentoAnual * 0.0165; const cofins = faturamentoAnual * 0.076; let irpj = lucro * 0.15; const csll = lucro * 0.09; irpj += Math.max(0, lucro - 240000) * 0.10; return irpj + csll + pis + cofins; };
+        if(form) { updateFormState(); }
+    });
+    // Lógica para o componente dos 4 Pilares da Reforma
+    (function(){
+      const container = document.getElementById('pilares-reforma');
+      if(!container) return;
+      const tabs = container.querySelectorAll('.p-btn');
+      const panels = container.querySelectorAll('.p-panel');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetId = tab.getAttribute('data-panel');
+          tabs.forEach(t => t.classList.remove('active'));
+          panels.forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          container.querySelector('#' + targetId).classList.add('active');
+        });
+      });
+    })();
+    // Lógica para a Calculadora de ROI com Múltiplos Passos
+    (function() {
+      const container = document.getElementById('roi-calculator-container');
+      if (!container) return;
+      
+      // SUBSTITUA AS CHAVES ABAIXO PELAS SUAS CHAVES REAIS DO EMAILJS
+      const EMAILJS_PUBLIC_KEY = "1HNSaSDPaJtmbSq9e";
+      const EMAILJS_SERVICE_ID = "service_jx7r077";
+      const EMAILJS_TEMPLATE_ID_LEAD = "template_twsh9qs";
+      const EMAILJS_TEMPLATE_ID_RESULTS = "template_vv8n3uc";
+
+      const screens = { screen1: document.getElementById('screen1-roi'), screen2: document.getElementById('screen2-roi'), screen3: document.getElementById('screen3-roi') };
+      const inputs = {
+          nome: document.getElementById('nome-roi'), cnpj: document.getElementById('cnpj-roi'), whatsapp: document.getElementById('whatsapp-roi'), regime: document.getElementById('regimeTributario-roi'),
+          faturamento: document.getElementById('faturamento-roi'), salarios: document.getElementById('salarios-roi'), software: document.getElementById('custoSoftware-roi'), proLabore: document.getElementById('proLabore-roi'), horas: document.getElementById('horasGestor-roi'),
+      };
+      const buttons = { screen1: document.getElementById('btnScreen1-roi'), screen2: document.getElementById('btnScreen2-roi') };
+      const messages = { screen1: document.getElementById('formMessage1-roi'), screen2: document.getElementById('formMessage2-roi') };
+      const leadData = {};
+
+      const formatCurrency = (value) => isNaN(value) ? 'R$ 0,00' : value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const showScreen = (screenName) => { Object.values(screens).forEach(s => s.classList.remove('active')); screens[screenName].classList.add('active'); };
+      const toggleLoading = (button, isLoading, text) => {
+          const btnText = button.querySelector('.btn-text');
+          const spinner = button.querySelector('.spinner');
+          button.disabled = isLoading;
+          if (isLoading) { btnText.textContent = 'Enviando...'; spinner.style.display = 'inline-block'; } 
+          else { btnText.textContent = text; spinner.style.display = 'none'; }
+      };
+      const applyMasks = () => {
+          inputs.cnpj.addEventListener('input', (e) => {
+              let v = e.target.value.replace(/\D/g, '');
+              v = v.replace(/^(\d{2})(\d)/, '$1.$2'); v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3'); v = v.replace(/\.(\d{3})(\d)/, '.$1/$2'); v = v.replace(/(\d{4})(\d)/, '$1-$2');
+              e.target.value = v;
+          });
+          inputs.whatsapp.addEventListener('input', (e) => {
+              let v = e.target.value.replace(/\D/g, '');
+              v = v.replace(/^(\d{2})(\d)/, '($1) $2'); v = v.replace(/(\d{5})(\d)/, '$1-$2');
+              e.target.value = v.slice(0, 15);
+          });
+      };
+
+      const handleScreen1Submit = async () => {
+          messages.screen1.textContent = '';
+          const { nome, cnpj, whatsapp, regime } = inputs;
+          if (!nome.value || !regime.value) { messages.screen1.textContent = 'Por favor, preencha o nome e o regime tributário.'; return; }
+          if (cnpj.value.replace(/\D/g, '').length !== 14) { messages.screen1.textContent = 'Por favor, insira um CNPJ válido.'; return; }
+          
+          toggleLoading(buttons.screen1, true, 'Avançar');
+          Object.assign(leadData, { nome: nome.value, cnpj: cnpj.value, whatsapp: whatsapp.value, regime: regime.value });
+          const templateParams = { nome: leadData.nome, cnpj: leadData.cnpj, whatsapp: leadData.whatsapp, regime: leadData.regime };
+          try {
+              // await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID_LEAD, templateParams); // Descomente para produção
+              console.log("Simulando envio de lead:", templateParams);
+              showScreen('screen2');
+          } catch (error) {
+              messages.screen1.textContent = 'Erro ao enviar. Tente novamente.';
+          } finally {
+              toggleLoading(buttons.screen1, false, 'Avançar');
+          }
+      };
+
+      const handleScreen2Submit = () => {
+          messages.screen2.textContent = '';
+          const faturamento = parseFloat(inputs.faturamento.value) || 0;
+          const salarios = parseFloat(inputs.salarios.value) || 0;
+          const software = parseFloat(inputs.software.value) || 0;
+          const proLabore = parseFloat(inputs.proLabore.value) || 0;
+          const horasDiarias = parseFloat(inputs.horas.value) || 0;
+          if (proLabore === 0 || horasDiarias === 0) { 
+              messages.screen2.textContent = 'Preencha o pró-labore e as horas para calcular.'; 
+              return; 
+          }
+          
+          toggleLoading(buttons.screen2, true, 'Ver Resultados');
+          const horasMensais = horasDiarias * 22;
+          const multiplicador = (leadData.regime === 'presumido' || leadData.regime === 'real') ? 1.7 : 1.4;
+          const custoPessoal = salarios * multiplicador;
+          const valorHoraGestor = proLabore / 160;
+          const custoTempo = valorHoraGestor * horasMensais;
+          const custoAtual = custoPessoal + software + custoTempo;
+
+          // Lógica de preços variável e escalonada
+          let valorPlanoG360;
+          if (faturamento <= 50000) {
+              valorPlanoG360 = 450;
+          } else if (faturamento <= 100000) {
+              valorPlanoG360 = 650;
+          } else if (faturamento <= 200000) {
+              valorPlanoG360 = 800;
+          } else if (faturamento <= 300000) {
+              valorPlanoG360 = 1150;
+          } else if (faturamento <= 400000) {
+              valorPlanoG360 = 1250;
+          } else if (faturamento <= 600000) {
+              valorPlanoG360 = 1490;
+          } else if (faturamento <= 800000) {
+              valorPlanoG360 = 1780;
+          } else if (faturamento <= 1000000) {
+              valorPlanoG360 = 2300;
+          } else {
+              valorPlanoG360 = 0; // Para acima de 1.000.000
+          }
+
+          const economia = faturamento > 1000000 ? 'Consultar preço' : custoAtual - valorPlanoG360;
+
+          document.getElementById('cenarioG360-roi').textContent = faturamento > 1000000 ? 'Sob consulta' : 'A partir de ' + formatCurrency(valorPlanoG360);
+          document.getElementById('custoPessoal-roi').textContent = formatCurrency(custoPessoal);	
+          document.getElementById('custoFerramentas-roi').textContent = formatCurrency(software);
+          document.getElementById('custoTempoGestor-roi').textContent = formatCurrency(custoTempo);
+          document.getElementById('cenarioAtual-roi').textContent = formatCurrency(custoAtual);
+          document.getElementById('economiaTotal-roi').textContent = 
+              typeof economia === 'number' ? formatCurrency(economia) : economia;
+          
+          const resultsTemplateParams = { 
+              ...leadData, 
+              faturamento: formatCurrency(faturamento), 
+              custo_pessoal: formatCurrency(custoPessoal), 
+              custo_ferramentas: formatCurrency(software), 
+              custo_tempo: formatCurrency(custoTempo), 
+              custo_total: formatCurrency(custoAtual), 
+              economia_total: typeof economia === 'number' ? formatCurrency(economia) : economia 
+          };
+          
+          // emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID_RESULTS, resultsTemplateParams)
+          console.log("Simulando envio de resultados:", resultsTemplateParams);
+          showScreen('screen3'); 
+          toggleLoading(buttons.screen2, false, 'Ver Resultados');
+      };
+
+      // --- INICIALIZAÇÃO ---
+      // emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); // Descomente para produção
+      applyMasks();
+      buttons.screen1.addEventListener('click', handleScreen1Submit);
+      buttons.screen2.addEventListener('click', handleScreen2Submit);
+    })();
+    // Lógica para a Página do Blog
+    (function() {
+      const blogPage = document.getElementById('blog');
+      if (!blogPage) return;
+      const filterBtns = blogPage.querySelectorAll('.blog-filter-btn');
+      const articles = blogPage.querySelectorAll('.blog-article-card');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.replace('primary', 'ghost'));
+          btn.classList.replace('ghost', 'primary');
+          const filter = btn.getAttribute('data-filter');
+          articles.forEach(article => {
+            if (filter === 'all' || article.getAttribute('data-category') === filter) {
+              article.style.display = 'flex';
+            } else {
+              article.style.display = 'none';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
